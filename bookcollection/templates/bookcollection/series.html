@@ -1,0 +1,40 @@
+{% extends 'bookcollection/base.html' %}
+
+{% block content %}
+  {% if all_series %}
+    {% csrf_token %}
+    <br>
+    <form method="POST" action="{% url 'bookcollection:series' %}">
+      {% csrf_token %}
+      {{search_form}}
+      <input type="submit" name="search" value="Search">
+    </form>
+    <ul>
+    {% for series in all_series %}
+    <article class="listing">
+      <h3><a href="{% url 'bookcollection:series_detail' series.id %}">{{ series.name }}</a></h3>
+      <p>{{ series.genre }} > {{ series.subgenre }}</p>
+      <p>({{series.book_count}} books)</p>
+    </article>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p>No series yet!</p>
+  {% endif %}
+  <a class="button" href="/bookcollection/series/new_series/">Add a Series</a></h2>
+  <div class="pagination">
+    <span class="step-links">
+        {% if all_series.has_previous %}
+            <a href="?page={{ all_series.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ all_series.number }} of {{ all_series.paginator.num_pages }}.
+        </span>
+
+        {% if all_series.has_next %}
+            <a href="?page={{ all_series.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+  </div>
+{% endblock %}

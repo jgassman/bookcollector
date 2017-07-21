@@ -1,0 +1,11 @@
+{% extends 'bookcollection/base.html' %}
+
+{% block content %}
+  <h1>{{ series.name }}</h1>
+  <p><span>Author:</span> {{series.authors|join:", " }}</p>
+  <ol>
+    {% for book in series_books %}
+      <li>{{ book.title }}</li>
+    {% endfor %}
+  </ol>
+{% endblock %}

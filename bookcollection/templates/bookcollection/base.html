@@ -1,0 +1,26 @@
+{% load static %}
+
+<head>
+  <link rel="stylesheet" type="text/css" href="/static/bookcollection/style.css">
+</head>
+
+<div class="container">
+  <div class="menu">
+    <a href="/bookcollection/">
+      <h1> A Super Awesome Name </h1>
+    </a>
+    <div class="links">
+      <a href="/bookcollection/authors/"> Authors </a>
+      <a href="/bookcollection/books/"> Books </a>
+      <a href="/bookcollection/genres/"> Genres </a>
+      <a href="/bookcollection/series/"> Series </a>
+      {%if user.is_authenticated %}
+        <a href="{% url 'logout' %}"> Log out </a>
+      {% endif %}
+    </div>
+  </div>
+  <div class="body">
+    {% block content %}{% endblock %}
+  </div>
+</div>
+
