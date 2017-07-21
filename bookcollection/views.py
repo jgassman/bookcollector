@@ -71,24 +71,23 @@ def genres(request):
 
 @login_required
 def series(request):
-    # if request.method == 'POST':
-    #     form = SearchForm(request.POST)
-    #     if form.is_valid():
-    #         search_text = form.cleaned_data['search_text']
-    #         series = Series.objects.filter(name__icontains=search_text)
-    # else:
-    # all_series = Series.objects.order_by('name')
-    # paginator = Paginator(series, 25)
-    # page = request.GET.get('page')
-    # search_form = SearchForm()
-    # try:
-    #     all_series = paginator.page(page)
-    # except PageNotAnInteger:
-    #     all_series = paginator.page(1)
-    # except EmptyPage:
-    #     all_series = paginator.page(paginator.num_pages)
-    # return render(request, 'bookcollection/series.html', {'all_series': all_series, 'search_form': search_form})
-    return render(request, 'bookcollection/series.html')
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            search_text = form.cleaned_data['search_text']
+            series = Series.objects.filter(name__icontains=search_text)
+    else:
+        series = Series.objects.order_by('name')
+    paginator = Paginator(series, 25)
+    page = request.GET.get('page')
+    search_form = SearchForm()
+    try:
+        all_series = paginator.page(page)
+    except PageNotAnInteger:
+        all_series = paginator.page(1)
+    except EmptyPage:
+        all_series = paginator.page(paginator.num_pages)
+    return render(request, 'bookcollection/series.html', {'all_series': all_series, 'search_form': search_form})
 
 
 @login_required
