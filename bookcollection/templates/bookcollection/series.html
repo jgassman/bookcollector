@@ -2,13 +2,13 @@
 
 {% block content %}
   {% if all_series %}
-    {% csrf_token %}
-    <br>
-    <form method="POST" action="{% url 'bookcollection:series' %}">
-      {% csrf_token %}
-      {{search_form}}
-      <input type="submit" name="search" value="Search">
-    </form>
+    <!-- {% csrf_token %} -->
+    <!-- <br> -->
+    <!-- <form method="POST" action="{% url 'bookcollection:series' %}"> -->
+    <!--   {% csrf_token %} -->
+    <!--   {{search_form}} -->
+    <!--   <input type="submit" name="search" value="Search"> -->
+    <!-- </form> -->
     <ul>
     {% for series in all_series %}
     <article class="listing">

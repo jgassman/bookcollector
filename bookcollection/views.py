@@ -77,17 +77,18 @@ def series(request):
     #         search_text = form.cleaned_data['search_text']
     #         series = Series.objects.filter(name__icontains=search_text)
     # else:
-    all_series = Series.objects.order_by('name')
+    # all_series = Series.objects.order_by('name')
     # paginator = Paginator(series, 25)
     # page = request.GET.get('page')
-    search_form = SearchForm()
+    # search_form = SearchForm()
     # try:
     #     all_series = paginator.page(page)
     # except PageNotAnInteger:
     #     all_series = paginator.page(1)
     # except EmptyPage:
     #     all_series = paginator.page(paginator.num_pages)
-    return render(request, 'bookcollection/series.html', {'all_series': all_series, 'search_form': search_form})
+    # return render(request, 'bookcollection/series.html', {'all_series': all_series, 'search_form': search_form})
+    return render(request, 'bookcollection/series.html')
 
 
 @login_required
