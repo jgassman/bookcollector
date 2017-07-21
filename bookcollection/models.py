@@ -71,11 +71,17 @@ class Series(models.Model):
 
     @property
     def genre(self):
-        return Book.objects.filter(series=self, series_number=1)[0].genre
+        try:
+            return Book.objects.filter(series=self, series_number=1)[0].genre
+        except:
+            return None
 
     @property
     def subgenre(self):
-        return Book.objects.filter(series=self, series_number=1)[0].subgenre
+        try:
+            return Book.objects.filter(series=self, series_number=1)[0].subgenre
+        except:
+            return None
 
     @property
     def authors(self):
