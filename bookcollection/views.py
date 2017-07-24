@@ -149,10 +149,9 @@ def author_create(request):
         form = AuthorForm(request.POST)
         if form.is_valid():
             form.save()
-        return redirect('/bookcollection/authors')
-    else:
-        form = AuthorForm()
-    return render(request, 'bookcollection/new_author.html', {'form': form})
+        if 'return' in request.POST:
+            return redirect('/bookcollection/authors')
+    return render(request, 'bookcollection/new_author.html', {'form': AuthorForm()})
 
 
 @login_required
@@ -161,7 +160,6 @@ def series_create(request):
         form = SeriesForm(request.POST)
         if form.is_valid():
             form.save()
-        return redirect('/bookcollection/series')
-    else:
-        form = SeriesForm()
-    return render(request, 'bookcollection/new_series.html', {'form': form})
+        if 'return' in request.POST:
+            return redirect('/bookcollection/series')
+    return render(request, 'bookcollection/new_series.html', {'form': SeriesForm()})
