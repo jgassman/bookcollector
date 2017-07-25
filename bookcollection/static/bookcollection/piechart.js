@@ -81,7 +81,7 @@ var drawPieChart = function(data, canvasId, legend) {
       {
         canvas:myCanvas,
         data:data,
-        colors:["#001b8a", "#0066e2",	"#e2e2e2",	"#b77c3a", "#844c00", "#37363a", "#141415"],
+        colors:["#001b8a", "004eb6", "#0066e2", "#e2e2e2", "#b77c3a", "#9e641d", "#844c00"],
         legend:myLegend
       }
   );
