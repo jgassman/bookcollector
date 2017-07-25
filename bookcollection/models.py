@@ -108,7 +108,7 @@ class Series(models.Model):
 
 
 class Book(models.Model):
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=100)
     year_published = models.IntegerField()
     authors = models.ManyToManyField(Author)
     series = models.ForeignKey(Series, models.SET_NULL, blank=True, null=True)
