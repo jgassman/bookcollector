@@ -18,6 +18,9 @@ class Genre(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ['name']
+
 
 class Subgenre(models.Model):
     name = models.CharField(max_length=15)
@@ -25,6 +28,9 @@ class Subgenre(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ['name', 'genre']
 
 
 class Author(models.Model):
@@ -61,6 +67,9 @@ class Author(models.Model):
     def __str__(self):
         return self.first_name + ' ' + self.last_name
 
+    class Meta:
+        ordering = ['last_name', 'first_name']
+
 
 class Series(models.Model):
     name = models.CharField(max_length=50)
@@ -95,6 +104,7 @@ class Series(models.Model):
 
     class Meta:
         verbose_name_plural = "Series"
+        ordering = ['name']
 
 
 class Book(models.Model):
