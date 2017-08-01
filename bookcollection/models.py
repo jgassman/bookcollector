@@ -65,7 +65,9 @@ class Author(models.Model):
         return len(self.series)
 
     def __str__(self):
-        return self.first_name + ' ' + self.last_name
+        if self.first_name:
+            return self.first_name + ' ' + self.last_name
+        return self.last_name
 
     class Meta:
         ordering = ['last_name', 'first_name']
