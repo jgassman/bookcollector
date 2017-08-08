@@ -1,0 +1,43 @@
+{% extends 'comiccollection/base.html' %}
+
+{% block content %}
+  {% if all_publishers %}
+    {% csrf_token %}
+    <br>
+    <form method="POST" action="{% url 'comiccollection:publishers' %}">
+      {% csrf_token %}
+      {{search_form}}
+      <input type="submit" name="search" value="Search">
+    </form>
+    <ul>
+    {% for publisher in all_publishers %}
+    <article class="listing">
+      <h3><a href="{% url 'comiccollection:publisher_detail' publisher.pk %}">{{ publisher }}</a></h3>
+      {% if publisher.comic_count == 1 %}
+        <p>({{publisher.comic_count}} comic)</p>
+      {% else %}
+        <p>({{publisher.comic_count}} comics)</p>
+      {% endif %}
+    </article>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p>No publishers yet!</p>
+  {% endif %}
+  <a class="button" href="/comiccollection/publishers/new_publisher/">Add a Publisher</a></h2>
+  <div class="pagination">
+    <span class="step-links">
+        {% if all_publishers.has_previous %}
+            <a href="?page={{ all_publishers.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ all_publishers.number }} of {{ all_publishers.paginator.num_pages }}.
+        </span>
+
+        {% if all_publishers.has_next %}
+            <a href="?page={{ all_publishers.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+  </div>
+{% endblock %}

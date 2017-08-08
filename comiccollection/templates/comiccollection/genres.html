@@ -1,0 +1,20 @@
+{% extends 'bookcollection/base.html' %}
+
+{% block content %}
+  {% if all_genres %}
+    <ul>
+    {% for genre in all_genres %}
+    <article class="listing">
+      <h3><a href="{% url 'bookcollection:genre_detail' genre.pk %}">{{ genre.name }}</a></h3>
+      {% if genre.book_count == 1 %}
+        <p>({{genre.book_count}} book)</p>
+      {% else %}
+        <p>({{genre.book_count}} books)</p>
+      {% endif %}
+    </article>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p>No genres yet!</p>
+  {% endif %}
+{% endblock %}

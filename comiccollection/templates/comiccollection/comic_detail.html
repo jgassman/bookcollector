@@ -1,0 +1,22 @@
+{% extends 'comiccollection/base.html' %}
+
+{% block content %}
+<div class="comic-content">
+  <img class="comic-cover" src={{ comic.img_url }} alt={{ comic.title }}>
+  <p><span>Writer:</span> {{comic.writers.all|join:", " }}</p>
+  <p><span>Illustrator:</span> {{comic.illustrators.all|join:", " }}</p>
+  <p><span>Publisher:</span> {{ comic.publisher }}</p>
+  {% if comic.series %}
+    <p><span>Series:</span> {{ comic.series }} (comic {{ comic.series_number }})</p>
+  {% endif %}
+</div>
+{% for writer in comic.writers.all %}
+  <p>See more comics written by <a href="{% url 'comiccollection:writer_detail' writer.id %}">{{ writer }}</a></p>
+{% endfor %}
+{% for illustrator in comic.illustrators.all %}
+  <p>See more comics illustrated by <a href="{% url 'comiccollection:illustrator_detail' illustrator.id %}">{{ illustrator }}</a></p>
+{% endfor %}
+{% if comic.series %}
+  <p>See more comics in the <a href="{% url 'comiccollection:series_detail' comic.series.id %}">{{ comic.series.name }}</a> series</p>
+{% endif %}
+{% endblock %}
