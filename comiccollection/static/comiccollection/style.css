@@ -230,18 +230,18 @@ input[type=submit]{
   float: right;
 }
 
-.book-cover {
+.comic-cover {
   height: 200px;
   width: 125px;
 }
 
-.book-content {
+.comic-content {
     width: 600px;
     padding: 20px;
     overflow: hidden;
 }
 
-.book-content img {
+.comic-content img {
     margin-right: 15px;
     float: left;
 }

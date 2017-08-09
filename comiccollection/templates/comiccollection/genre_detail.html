@@ -1,4 +1,4 @@
-{% extends 'bookcollection/base.html' %}
+{% extends 'comiccollection/base.html' %}
 
 {% block content %}
   <div class='page-title'>
@@ -7,14 +7,14 @@
   <table class="fixed">
     <tr>
         <td>
-          {% if genre.book_count == 1 %}
-            <h3>Books ({{genre.book_count}} book)</h3>
+          {% if genre.comic_count == 1 %}
+            <h3>comics ({{genre.comic_count}} comic)</h3>
           {% else %}
-            <h3>Books ({{genre.book_count}} books)</h3>
+            <h3>comics ({{genre.comic_count}} comics)</h3>
           {% endif %}
           <ul>
-            {% for book in genre.book_set.all %}
-              <li><a href="{% url 'bookcollection:book_detail' book.id %}">{{ book.title }}</a></li>
+            {% for comic in genre.comic_set.all %}
+              <li><a href="{% url 'comiccollection:comic_detail' comic.id %}">{{ comic.title }}</a></li>
             {% endfor %}
           </ul>
         </td>
@@ -22,7 +22,7 @@
           <h3>Authors</h3>
           <ul>
             {% for author in authors %}
-              <li><a href="{% url 'bookcollection:author_detail' author.id %}">{{ author }}</a></li>
+              <li><a href="{% url 'comiccollection:author_detail' author.id %}">{{ author }}</a></li>
             {% endfor %}
           </ul>
         </td>
@@ -40,8 +40,8 @@
   </table>
   <div class='stat-grid'>
     <div class="box">
-      <h3>Total Number of Books</h3>
-      <p>{{book_count}}</p>
+      <h3>Total Number of comics</h3>
+      <p>{{comic_count}}</p>
     </div>
     <div class="box">
       <h3>Total Number of Authors</h3>
@@ -52,25 +52,14 @@
       <p>{{series_count}}</p>
     </div>
     <div class="box">
-      <h3>Books by Subgenre</h3>
+      <h3>comics by Subgenre</h3>
       <canvas id="genreCanvas"></canvas>
       <div id="genreLegend"></div>
-      <script type="text/javascript" src="/static/bookcollection/piechart.js"></script>
+      <script type="text/javascript" src="/static/comiccollection/piechart.js"></script>
       <script>
         var data = {{ genreData|safe }};
         console.log(data);
         drawPieChart(data,  "genreCanvas", "genreLegend");
-      </script>
-    </div>
-    <div class="box">
-      <h3>Books by Age Group</h3>
-      <canvas id="ageCanvas"></canvas>
-      <div id="ageLegend"></div>
-      <script type="text/javascript" src="/static/bookcollection/piechart.js"></script>
-      <script>
-        var data = {{ ageData|safe }};
-        console.log(data);
-        drawPieChart(data,  "ageCanvas", "ageLegend");
       </script>
     </div>
   </div>
