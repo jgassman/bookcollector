@@ -133,7 +133,7 @@ def series_detail(request, series_id):
 
 
 @login_required
-def book_create(request):
+def new_book(request):
     if request.method == 'POST':
         form = BookForm(request.POST)
         if form.is_valid():
@@ -144,7 +144,7 @@ def book_create(request):
 
 
 @login_required
-def author_create(request):
+def new_author(request):
     if request.method == 'POST':
         form = AuthorForm(request.POST)
         if form.is_valid():
@@ -155,7 +155,7 @@ def author_create(request):
 
 
 @login_required
-def series_create(request):
+def new_series(request):
     if request.method == 'POST':
         form = SeriesForm(request.POST)
         if form.is_valid():

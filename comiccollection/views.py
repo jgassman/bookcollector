@@ -204,7 +204,7 @@ def series_detail(request, series_id):
 
 
 @login_required
-def comic_create(request):
+def new_comic(request):
     if request.method == 'POST':
         form = ComicBookForm(request.POST)
         if form.is_valid():
@@ -215,7 +215,7 @@ def comic_create(request):
 
 
 @login_required
-def illustrator_create(request):
+def new_illustrator(request):
     if request.method == 'POST':
         form = IllustratorForm(request.POST)
         if form.is_valid():
@@ -226,7 +226,7 @@ def illustrator_create(request):
 
 
 @login_required
-def publisher_create(request):
+def new_publisher(request):
     if request.method == 'POST':
         form = PublisherForm(request.POST)
         if form.is_valid():
@@ -237,7 +237,7 @@ def publisher_create(request):
 
 
 @login_required
-def writer_create(request):
+def new_writer(request):
     if request.method == 'POST':
         form = WriterForm(request.POST)
         if form.is_valid():
@@ -248,7 +248,7 @@ def writer_create(request):
 
 
 @login_required
-def series_create(request):
+def new_series(request):
     if request.method == 'POST':
         form = SeriesForm(request.POST)
         if form.is_valid():
