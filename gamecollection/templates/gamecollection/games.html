@@ -18,7 +18,7 @@
         <span>System:</span> {{game.system}}
       </div>
       <div class="detail developer">
-        <span>Developer:</span> {{game.developer}}
+        <span>Developer:</span> {{ game.developers.all|join", " }}
       </div>
       {% if game.copies > 1 %}
         <div class="detail copies">
