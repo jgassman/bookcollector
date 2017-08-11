@@ -151,7 +151,6 @@ class Game(models.Model):
     year_released = models.IntegerField()
     developers = models.ManyToManyField(Developer)
     series = models.ForeignKey(Series, null=True, blank=True)
-    series_number = models.CharField(max_length=10, null=True, blank=True)
     system = models.ForeignKey(System)
     genre = models.ForeignKey(Genre)
     copies = models.IntegerField(default=1)

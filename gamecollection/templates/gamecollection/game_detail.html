@@ -6,7 +6,7 @@
   <p><span>System:</span> {{game.system}}</p>
   <p><span>Developer:</span> {{game.developers.all|join:", "}}</p>
   {% if game.series %}
-    <p><span>Series:</span> {{ game.series }} (game {{ game.series_number }})</p>
+    <p><span>Series:</span> {{ game.series }}
   {% endif %}
 </div>
 <p>See more games for the <a href="{% url 'gamecollection:system_detail' game.system.id %}">{{ game.system }}</a></p>
