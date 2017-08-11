@@ -10,22 +10,22 @@
       <p>{{system.game_count}}</p>
     </div>
     <div class="box">
-      <h3>Total Number of Studios</h3>
-      <p>{{system.studio_count}}</p>
+      <h3>Total Number of Developers</h3>
+      <p>{{system.developer_count}}</p>
     </div>
     <div class="box">
       <h3>Total Number of Series</h3>
       <p>{{system.series_count}}</p>
     </div>
     <div class="box">
-      <h3>Games by Studio</h3>
-      <canvas id="studioCanvas"></canvas>
-      <div id="studioLegend"></div>
+      <h3>Games by Developer</h3>
+      <canvas id="developerCanvas"></canvas>
+      <div id="developerLegend"></div>
       <script type="text/javascript" src="/static/gamecollection/piechart.js"></script>
       <script>
-        var data = {{ studioData|safe }};
+        var data = {{ developerData|safe }};
         console.log(data);
-        drawPieChart(data,  "studioCanvas", "studioLegend");
+        drawPieChart(data,  "developerCanvas", "developerLegend");
       </script>
     </div>
     <div class="box">
@@ -51,11 +51,11 @@
           </ul>
         </td>
         <td>
-          {% if system.studios %}
-            <h3>Studios</h3>
+          {% if system.developers %}
+            <h3>developers</h3>
             <ul>
-              {% for studio in system.studios %}
-                <li><a href="{% url 'gamecollection:studio_detail' studio.id %}">{{ studio.name }}</a></li>
+              {% for developer in system.developers %}
+                <li><a href="{% url 'gamecollection:developer_detail' developer.id %}">{{ developer.name }}</a></li>
               {% endfor %}
             </ul>
           {% endif %}

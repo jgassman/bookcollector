@@ -5,15 +5,15 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Sum
 from django.shortcuts import get_object_or_404, redirect, render
 
-from gamecollection.forms import GameForm, SearchForm, SeriesForm, StudioForm, SystemForm
-from gamecollection.models import Game, Genre, Series, Studio, System
+from gamecollection.forms import GameForm, SearchForm, SeriesForm, DeveloperForm, SystemForm
+from gamecollection.models import Game, Genre, Series, Developer, System
 
 
 @login_required
 def index(request):
     context = {
         'game_count': Game.objects.count(),
-        'studio_count': Studio.objects.count(),
+        'developer_count': Developer.objects.count(),
         'series_count': Series.objects.count(),
         'system_count': System.objects.count(),
         'all_game_count': Game.objects.aggregate(Sum('copies')),
@@ -71,24 +71,24 @@ def series(request):
 
 
 @login_required
-def studios(request):
+def developers(request):
     if request.method == 'POST':
         form = SearchForm(request.POST)
         if form.is_valid():
             search_text = form.cleaned_data['search_text']
-            studios = Studio.objects.filter(name__icontains=search_text)
+            developers = Developer.objects.filter(name__icontains=search_text)
     else:
-        studios = Studio.objects.order_by('name')
-    paginator = Paginator(studios, 25)
+        developers = Developer.objects.order_by('name')
+    paginator = Paginator(developers, 25)
     page = request.GET.get('page')
     search_form = SearchForm()
     try:
-        all_studios = paginator.page(page)
+        all_developers = paginator.page(page)
     except PageNotAnInteger:
-        all_studios = paginator.page(1)
+        all_developers = paginator.page(1)
     except EmptyPage:
-        all_studios = paginator.page(paginator.num_pages)
-    return render(request, 'gamecollection/studios.html', {'all_studios': all_studios, 'search_form': search_form})
+        all_developers = paginator.page(paginator.num_pages)
+    return render(request, 'gamecollection/developers.html', {'all_developers': all_developers, 'search_form': search_form})
 
 
 @login_required
@@ -140,19 +140,19 @@ def series_detail(request, series_id):
 
 
 @login_required
-def studio_detail(request, studio_id):
-    studio = get_object_or_404(Studio, pk=studio_id)
-    context = {'studio': studio,
-               'systemData': json.dumps({s.name: Game.objects.filter(system=s, studio=studio).count() for s in studio.systems}),
-               'genreData': json.dumps({g.name: Game.objects.filter(genre=g, studio=studio).count() for g in studio.genres})}
-    return render(request, 'gamecollection/studio_detail.html', context=context)
+def developer_detail(request, developer_id):
+    developer = get_object_or_404(Developer, pk=developer_id)
+    context = {'developer': developer,
+               'systemData': json.dumps({s.name: Game.objects.filter(system=s, developer=developer).count() for s in developer.systems}),
+               'genreData': json.dumps({g.name: Game.objects.filter(genre=g, developer=developer).count() for g in developer.genres})}
+    return render(request, 'gamecollection/developer_detail.html', context=context)
 
 
 @login_required
 def system_detail(request, system_id):
     system = get_object_or_404(System, pk=system_id)
     context = {'system': system,
-               'studioData': json.dumps({s.name: Game.objects.filter(studio=s, system=system).count() for s in system.studios}),
+               'developerData': json.dumps({s.name: Game.objects.filter(developer=s, system=system).count() for s in system.developers}),
                'genreData': json.dumps({g.name: Game.objects.filter(genre=g, system=system).count() for g in system.genres})}
     return render(request, 'gamecollection/system_detail.html', context=context)
 
@@ -180,14 +180,14 @@ def new_series(request):
 
 
 @login_required
-def new_studio(request):
+def new_developer(request):
     if request.method == 'POST':
-        form = StudioForm(request.POST)
+        form = DeveloperForm(request.POST)
         if form.is_valid():
             form.save()
         if 'return' in request.POST:
-            return redirect('/gamecollection/studios')
-    return render(request, 'gamecollection/new_studio.html', {'form': StudioForm()})
+            return redirect('/gamecollection/developers')
+    return render(request, 'gamecollection/new_developer.html', {'form': DeveloperForm()})
 
 
 @login_required

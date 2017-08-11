@@ -49,7 +49,7 @@ class Series(models.Model):
         ordering = ['name']
 
 
-class Studio(models.Model):
+class Developer(models.Model):
     name = models.CharField(max_length=100)
 
     @property
@@ -128,16 +128,16 @@ class System(models.Model):
         return genre_set
 
     @property
-    def studios(self):
-        studios_set = set()
+    def developers(self):
+        developer_set = set()
         for game in self.games:
-            if game.studio:
-                studios_set.add(game.studio)
-        return studios_set
+            for dev in game.developers:
+                developer_set.add(dev)
+        return developer_set
 
     @property
-    def studio_count(self):
-        return len(self.studios)
+    def developer_count(self):
+        return len(self.developers)
 
     def __str__(self):
         return self.name
@@ -149,7 +149,7 @@ class System(models.Model):
 class Game(models.Model):
     title = models.CharField(max_length=100)
     year_released = models.IntegerField()
-    studio = models.ForeignKey(Studio)
+    developers = models.ManyToManyField(Developer)
     series = models.ForeignKey(Series, null=True, blank=True)
     series_number = models.CharField(max_length=10, null=True, blank=True)
     system = models.ForeignKey(System)

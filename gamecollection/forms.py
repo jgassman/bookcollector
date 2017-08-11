@@ -1,6 +1,6 @@
 from django import forms
 
-from gamecollection.models import Game, Series, Studio, System
+from gamecollection.models import Game, Series, Developer, System
 
 
 class GameForm(forms.ModelForm):
@@ -15,9 +15,9 @@ class SeriesForm(forms.ModelForm):
         fields = '__all__'
 
 
-class StudioForm(forms.ModelForm):
+class DeveloperForm(forms.ModelForm):
     class Meta:
-        model = Studio
+        model = Developer
         fields = '__all__'
 
 
