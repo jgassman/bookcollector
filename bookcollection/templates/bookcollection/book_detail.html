@@ -4,6 +4,7 @@
 <div class="book-content">
   <img class="book-cover" src={{ book.img_url }} alt={{ book.title }}>
   <p><span>Author:</span> {{book.authors.all|join:", " }}</p>
+  <p><span>Year:</span> {{book.year_published}}</p>
   <p><span>Genre:</span> {{book.genre}} > {{book.subgenre}}</p>
   <p><span>Age:</span> {{book.age_group}}</p>
   {% if book.series %}
