@@ -4,7 +4,7 @@
 <div class="game-content">
   <img class="game-cover" src={{ game.img_url }} alt={{ game.title }}>
   <p><span>System:</span> {{game.system}}</p>
-  <p><span>Developer:</span> {{game.developers.all|join", "}}</p>
+  <p><span>Developer:</span> {{game.developers.all|join:", "}}</p>
   {% if game.series %}
     <p><span>Series:</span> {{ game.series }} (game {{ game.series_number }})</p>
   {% endif %}
