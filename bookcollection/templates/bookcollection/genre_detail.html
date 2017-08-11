@@ -4,40 +4,6 @@
   <div class='page-title'>
     <h1>{{ genre }}</h1>
   </div>
-  <table class="fixed">
-    <tr>
-        <td>
-          {% if genre.book_count == 1 %}
-            <h3>Books ({{genre.book_count}} book)</h3>
-          {% else %}
-            <h3>Books ({{genre.book_count}} books)</h3>
-          {% endif %}
-          <ul>
-            {% for book in genre.book_set.all %}
-              <li><a href="{% url 'bookcollection:book_detail' book.id %}">{{ book.title }}</a></li>
-            {% endfor %}
-          </ul>
-        </td>
-        <td>
-          <h3>Authors</h3>
-          <ul>
-            {% for author in authors %}
-              <li><a href="{% url 'bookcollection:author_detail' author.id %}">{{ author }}</a></li>
-            {% endfor %}
-          </ul>
-        </td>
-        <td>
-          {% if series %}
-            <h3>Series</h3>
-            <ul>
-              {% for series in series %}
-                <li>{{ series.name }}</li>
-              {% endfor %}
-            </ul>
-          {% endif %}
-        </td>
-    </tr>
-  </table>
   <div class='stat-grid'>
     <div class="box">
       <h3>Total Number of Books</h3>
@@ -74,4 +40,38 @@
       </script>
     </div>
   </div>
+  <table class="fixed">
+    <tr>
+        <td>
+          {% if genre.book_count == 1 %}
+            <h3>Books ({{genre.book_count}} book)</h3>
+          {% else %}
+            <h3>Books ({{genre.book_count}} books)</h3>
+          {% endif %}
+          <ul>
+            {% for book in genre.book_set.all %}
+              <li><a href="{% url 'bookcollection:book_detail' book.id %}">{{ book.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </td>
+        <td>
+          <h3>Authors</h3>
+          <ul>
+            {% for author in authors %}
+              <li><a href="{% url 'bookcollection:author_detail' author.id %}">{{ author }}</a></li>
+            {% endfor %}
+          </ul>
+        </td>
+        <td>
+          {% if series %}
+            <h3>Series</h3>
+            <ul>
+              {% for series in series %}
+                <li>{{ series.name }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </td>
+    </tr>
+  </table>
 {% endblock %}
