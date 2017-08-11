@@ -1,0 +1,20 @@
+{% extends 'gamecollection/base.html' %}
+
+{% block content %}
+  {% if all_genres %}
+    <ul>
+    {% for genre in all_genres %}
+    <article class="listing">
+      <h3><a href="{% url 'gamecollection:genre_detail' genre.pk %}">{{ genre.name }}</a></h3>
+      {% if genre.game_count == 1 %}
+        <p>({{genre.game_count}} game)</p>
+      {% else %}
+        <p>({{genre.game_count}} games)</p>
+      {% endif %}
+    </article>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p>No genres yet!</p>
+  {% endif %}
+{% endblock %}

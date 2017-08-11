@@ -1,0 +1,60 @@
+{% extends 'gamecollection/base.html' %}
+
+{% block content %}
+  {% if all_games %}
+    {% csrf_token %}
+    <br>
+    <form method="POST" action="{% url 'gamecollection:games' %}">
+      {% csrf_token %}
+      {{search_form}}
+      <input type="submit" name="search" value="Search">
+    </form>
+    <ul>
+    {% for game in all_games %}
+    <article class="listing">
+      <img class="game-cover" src={{ game.img_url }} alt={{ game.title }}>
+      <h3><a href="{% url 'gamecollection:game_detail' game.id %}">{{ game.title }}</a></h3>
+      <div class="detail system">
+        <span>System:</span> {{game.system}}
+      </div>
+      <div class="detail studio">
+        <span>Studio:</span> {{game.studio}}
+      </div>
+      {% if game.copies > 1 %}
+        <div class="detail copies">
+          <span>Copies:</span> {{ game.copies }}
+        </div>
+      {% endif %}
+      {% if game.digital %}
+        <div class="detail digital">
+          <span>[Digital]</span>
+        </div>
+      {% endif %}
+      {% if game.series %}
+        <div class="detail series">
+          <span>Series:</span> {{ game.series }} (game {{game.series_number}})
+        </div>
+      {% endif %}
+    </article>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p>No games yet!</p>
+  {% endif %}
+  <a class="button" href="/gamecollection/games/new_game/">Add a Game</a></h2>
+  <div class="pagination">
+    <span class="step-links">
+        {% if all_games.has_previous %}
+            <a href="?page={{ all_games.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ all_games.number }} of {{ all_games.paginator.num_pages }}.
+        </span>
+
+        {% if all_games.has_next %}
+            <a href="?page={{ all_games.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+  </div>
+{% endblock %}

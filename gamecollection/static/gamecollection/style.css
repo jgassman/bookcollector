@@ -1,0 +1,186 @@
+@import url('https://fonts.googleapis.com/css?family=Acme');
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+div,
+span,
+a { font-family: 'Acme'; line-height: 1.5; text-decoration: none; }
+
+ul li a {
+  color: #000000;
+}
+
+p a {
+  color: #009403;
+}
+
+.listing {
+    margin-top: 15px;
+    background-color: #f6f6f6;
+    padding: 15px 50px;
+    min-height: 145px;
+    position: relative;
+}
+
+.listing:hover {
+    background-color: #f3f3f3;
+}
+
+.listing img {
+    height: 150px;
+    width: 105px;
+    float: left;
+    margin-right: 45px;
+    border-radius: 5px;
+}
+
+.listing h3 {
+    padding: 0 15px 0 0;
+}
+
+.listing h3 a {
+    display: inline;
+    color: #000000;
+}
+
+.listing .detail {
+    width: 36%;
+    display: inline-block;
+    padding: 0px 15px 0 0;
+    margin: 0;
+    font-weight: 300;
+}
+
+.listing .detail span {
+    font-weight: 400;
+    font-style: normal;
+}
+
+.menu {
+    height: 4em;
+    background-color: #006302;
+}
+
+.menu h1 {
+    padding: 7px 0 0 20px;
+    color: #b0b0b0;
+    font-size: 2.1em;
+    position: relative;
+    left: -12px;
+    bottom: 15px;
+}
+
+.menu a,
+.menu .links {
+    display: inline-block;
+}
+
+.menu a {
+    line-height: 1;
+    padding: 0 15px;
+    color: #b0b0b0;
+    opacity: 0.85;
+}
+
+.menu .links {
+  float: right;
+  padding-right: 30px;
+  padding-top: 43px;
+}
+
+.menu .links a {
+    position: relative;
+    bottom: 5px;
+}
+
+.container {
+    max-width: 1024px;
+    min-height: 100vh;
+    background: #f9f9f9;
+    margin: 0 auto;
+}
+
+.page-title {
+  padding-left: 10px;
+}
+
+.button {
+  padding: 12px 30px 13px;
+  color: #e3e3e3;
+  background: #002f01;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+  opacity: 0.9;
+  position: relative;
+}
+
+.button:hover {
+    opacity: 1;
+}
+
+.body {
+    padding: 15px;
+}
+
+label {
+  float: left;
+  clear: left;
+  width: 100px;
+  text-align: right;
+  margin-right: 20px;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: 325px 325px 325px;
+  grid-gap: 10px;
+  background-color: #fff;
+  color: #444;
+}
+
+.box {
+  background-color: #444;
+  color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+  font-size: 150%;
+}
+
+input[type=submit]{
+  font-family: 'Acme';
+}
+
+.pagination {
+  padding-top: 10px;
+  float: right;
+}
+
+.game-cover {
+  height: 200px;
+  width: 140px;
+}
+
+.game-content {
+    width: 600px;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.game-content img {
+    margin-right: 15px;
+    float: left;
+}
+
+table.fixed {table-layout:fixed; width:900px;}/*Setting the table width is important!*/
+table.fixed td {overflow:hidden; vertical-align: top; }/*Hide text outside the cell.*/
+table.fixed td:nth-of-type(1) {width:300px; vertical-align: top; }/*Setting the width of column 1.*/
+table.fixed td:nth-of-type(2) {width:300px; vertical-align: top; }/*Setting the width of column 2.*/
+table.fixed td:nth-of-type(3) {width:300px; vertical-align: top; }/*Setting the width of column 3.*/
+

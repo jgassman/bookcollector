@@ -1,0 +1,43 @@
+{% extends 'gamecollection/base.html' %}
+
+{% block content %}
+  {% if all_studios %}
+    {% csrf_token %}
+    <br>
+    <form method="POST" action="{% url 'gamecollection:studios' %}">
+      {% csrf_token %}
+      {{search_form}}
+      <input type="submit" name="search" value="Search">
+    </form>
+    <ul>
+    {% for studio in all_studios %}
+    <article class="listing">
+      <h3><a href="{% url 'gamecollection:studio_detail' studio.pk %}">{{ studio }}</a></h3>
+      {% if studio.game_count == 1 %}
+        <p>({{studio.game_count}} game)</p>
+      {% else %}
+        <p>({{studio.game_count}} games)</p>
+      {% endif %}
+    </article>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p>No studios yet!</p>
+  {% endif %}
+  <a class="button" href="/gamecollection/studios/new_studio/">Add a Studio</a></h2>
+  <div class="pagination">
+    <span class="step-links">
+        {% if all_studios.has_previous %}
+            <a href="?page={{ all_studios.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ all_studios.number }} of {{ all_studios.paginator.num_pages }}.
+        </span>
+
+        {% if all_studios.has_next %}
+            <a href="?page={{ all_studios.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+  </div>
+{% endblock %}

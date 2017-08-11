@@ -1,0 +1,17 @@
+{% extends 'gamecollection/base.html' %}
+
+{% block content %}
+<div class="game-content">
+  <img class="game-cover" src={{ game.img_url }} alt={{ game.title }}>
+  <p><span>System:</span> {{game.system}}</p>
+  <p><span>Studio:</span> {{game.studio}}</p>
+  {% if game.series %}
+    <p><span>Series:</span> {{ game.series }} (game {{ game.series_number }})</p>
+  {% endif %}
+</div>
+<p>See more games for the <a href="{% url 'gamecollection:system_detail' game.system.id %}">{{ game.system }}</a></p>
+<p>See more games made by <a href="{% url 'gamecollection:studio_detail' game.studio.id %}">{{ game.studio }}</a></p>
+{% if game.series %}
+  <p>See more games in the <a href="{% url 'gamecollection:series_detail' game.series.id %}">{{ game.series.name }}</a> series</p>
+{% endif %}
+{% endblock %}

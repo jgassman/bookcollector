@@ -1,0 +1,39 @@
+{% extends 'gamecollection/base.html' %}
+
+{% block content %}
+  <div class='page-title'>
+    <h1>{{ genre }}</h1>
+  </div>
+  <div class='stat-grid'>
+    <div class="box">
+      <h3>Total Number of Games</h3>
+      <p>{{game_count}}</p>
+    </div>
+    <div class="box">
+      <h3>Total Number of Series</h3>
+      <p>{{series_count}}</p>
+    </div>
+  </div>
+  <table class="fixed">
+    <tr>
+        <td>
+          <h3>Games</h3>
+          <ul>
+            {% for game in genre.game_set.all %}
+              <li><a href="{% url 'gamecollection:game_detail' game.id %}">{{ game.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </td>
+        <td>
+          {% if series %}
+            <h3>Series</h3>
+            <ul>
+              {% for series in series %}
+              <li><a href="{% url 'gamecollection:series_detail' series.id %}">{{ series.name }}</a></li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </td>
+    </tr>
+  </table>
+{% endblock %}
