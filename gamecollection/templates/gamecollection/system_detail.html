@@ -52,7 +52,7 @@
         </td>
         <td>
           {% if system.developers %}
-            <h3>developers</h3>
+            <h3>Developers</h3>
             <ul>
               {% for developer in system.developers %}
                 <li><a href="{% url 'gamecollection:developer_detail' developer.id %}">{{ developer.name }}</a></li>

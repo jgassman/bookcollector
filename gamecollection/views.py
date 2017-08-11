@@ -143,8 +143,8 @@ def series_detail(request, series_id):
 def developer_detail(request, developer_id):
     developer = get_object_or_404(Developer, pk=developer_id)
     context = {'developer': developer,
-               'systemData': json.dumps({s.name: Game.objects.filter(system=s, developer=developer).count() for s in developer.systems}),
-               'genreData': json.dumps({g.name: Game.objects.filter(genre=g, developer=developer).count() for g in developer.genres})}
+               'systemData': json.dumps({s.name: Game.objects.filter(system=s, developers=developer).count() for s in developer.systems}),
+               'genreData': json.dumps({g.name: Game.objects.filter(genre=g, developers=developer).count() for g in developer.genres})}
     return render(request, 'gamecollection/developer_detail.html', context=context)
 
 
@@ -152,7 +152,7 @@ def developer_detail(request, developer_id):
 def system_detail(request, system_id):
     system = get_object_or_404(System, pk=system_id)
     context = {'system': system,
-               'developerData': json.dumps({s.name: Game.objects.filter(developer=s, system=system).count() for s in system.developers}),
+               'developerData': json.dumps({s.name: Game.objects.filter(developers=s, system=system).count() for s in system.developers}),
                'genreData': json.dumps({g.name: Game.objects.filter(genre=g, system=system).count() for g in system.genres})}
     return render(request, 'gamecollection/system_detail.html', context=context)
 

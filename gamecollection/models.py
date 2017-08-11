@@ -131,7 +131,7 @@ class System(models.Model):
     def developers(self):
         developer_set = set()
         for game in self.games:
-            for dev in game.developers:
+            for dev in game.developers.all():
                 developer_set.add(dev)
         return developer_set
 
