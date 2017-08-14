@@ -24,9 +24,15 @@
         <span>Age:</span> {{book.age_group}}
       </div>
       {% if book.series %}
-        <div class="detail series">
-          <span>Series:</span> {{ book.series }} (Book {{book.series_number}})
-        </div>
+        {% if book.series_number %}
+          <div class="detail series">
+            <span>Series:</span> {{ book.series }} (Book {{book.series_number}})
+          </div>
+        {% else %}
+          <div class="detail series">
+            <span>Series:</span> {{ book.series }}
+          </div>
+        {% endif %}
       {% endif %}
     </article>
     {% endfor %}
