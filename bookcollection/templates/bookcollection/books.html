@@ -34,6 +34,9 @@
           </div>
         {% endif %}
       {% endif %}
+      {% if book.audiobook %}
+        <p><span>[audiobook]</span></p>
+      {% endif %}
     </article>
     {% endfor %}
     </ul>

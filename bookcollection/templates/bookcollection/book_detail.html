@@ -10,6 +10,9 @@
   {% if book.series %}
     <p><span>Series:</span> {{ book.series }} (Book {{book.series_number}})</p>
   {% endif %}
+  {% if book.audiobook %}
+    <p><span>[audiobook]</span></p>
+  {% endif %}
 </div>
 {% for author in book.authors.all %}
   <p>See more books by <a href="{% url 'bookcollection:author_detail' author.id %}">{{ author }}</a></p>
