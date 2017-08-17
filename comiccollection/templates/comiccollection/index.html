@@ -26,7 +26,6 @@
       <script type="text/javascript" src="/static/comiccollection/piechart.js"></script>
       <script>
         var data = {{ genreData|safe }};
-        console.log(data);
         drawPieChart(data,  "genreCanvas", "genreLegend");
       </script>
     </div>

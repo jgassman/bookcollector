@@ -24,7 +24,6 @@
       <script type="text/javascript" src="/static/gamecollection/piechart.js"></script>
       <script>
         var data = {{ genreData|safe }};
-        console.log(data);
         drawPieChart(data,  "genreCanvas", "genreLegend");
       </script>
     </div>
@@ -35,7 +34,6 @@
       <script type="text/javascript" src="/static/gamecollection/piechart.js"></script>
       <script>
         var data = {{ systemData|safe }};
-        console.log(data);
         drawPieChart(data,  "systemCanvas", "systemLegend");
       </script>
     </div>
