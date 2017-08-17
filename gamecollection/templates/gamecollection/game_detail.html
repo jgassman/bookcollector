@@ -2,14 +2,36 @@
 
 {% block content %}
 <div class="game-content">
-  <img class="game-cover" src={{ game.img_url }} alt={{ game.title }}>
+  <div class="cover-space">
+    <img class="game-cover" src={{ game.img_url }} alt={{ game.title }}>
+  </div>
   <p><span>System:</span> {{game.system}}</p>
   <p><span>Developer:</span> {{game.developers.all|join:", "}}</p>
   <p><span>Year:</span> {{game.year_released}}</p>
   {% if game.series %}
     <p><span>Series:</span> {{ game.series }}</p>
   {% endif %}
+  {% if game.digital %}
+    <p>[digital]</p>
+  {% endif %}
+  <p>
+    {% if game.needs_case %}
+      [Needs Case]
+    {% endif %}
+    {% if game.needs_booklet %}
+      [Needs Booklet]
+    {% endif %}
+  </p>
 </div>
+<form method="post">
+  {% csrf_token %}
+  {% if game.needs_case %}
+    <input class="button" type="submit" name="case" value="Got the Case!">
+  {% endif %}
+  {% if game.needs_booklet %}
+    <input class="button" type="submit" name="booklet" value="Got the Booklet!">
+  {% endif %}
+</form>
 <p>See more games for the <a href="{% url 'gamecollection:system_detail' game.system.id %}">{{ game.system }}</a></p>
 {% for dev in game.developers.all %}
   <p>See more games made by <a href="{% url 'gamecollection:developer_detail' dev.id %}">{{ dev }}</a></p>

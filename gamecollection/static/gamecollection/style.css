@@ -52,9 +52,17 @@ p a {
 .listing .detail {
     width: 36%;
     display: inline-block;
+    vertical-align: top;
     padding: 0px 15px 0 0;
     margin: 0;
     font-weight: 300;
+}
+
+.listing .cover-space {
+    height: 145px;
+    width: 105px;
+    float: left;
+    margin-right: 45px;
 }
 
 .listing .case,
@@ -164,12 +172,20 @@ input[type=submit]{
 
 .pagination {
   padding-top: 10px;
-  float: right;
+  text-align: center;
+  /* float: left; */
 }
 
 .game-cover {
-  height: 200px;
+  height: auto;
   width: 140px;
+}
+
+.game-content .cover-space {
+    height:200px;
+    width:140px;
+    float: left;
+    margin-right: 15px;
 }
 
 .game-content {
