@@ -12,7 +12,9 @@
     <ul>
     {% for game in all_games %}
     <article class="listing">
-      <img class="game-cover" src={{ game.img_url }} alt={{ game.title }}>
+      <div class="cover-space">
+        <img class="game-cover" src={{ game.img_url }} alt={{ game.title }}>
+      </div>
       <h3><a href="{% url 'gamecollection:game_detail' game.id %}">{{ game.title }}</a></h3>
       <div class="detail system">
         <span>System:</span> {{game.system}}

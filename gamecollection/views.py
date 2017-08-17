@@ -114,6 +114,11 @@ def systems(request):
 
 @login_required
 def game_detail(request, game_id):
+    if request.method == 'POST':
+        if 'case' in request.POST:
+            Game.objects.filter(pk=game_id).update(needs_case=False)
+        elif 'booklet' in request.POST:
+            Game.objects.filter(pk=game_id).update(needs_booklet=False)
     game = get_object_or_404(Game, pk=game_id)
     return render(request, 'gamecollection/game_detail.html', {'game': game})
 
