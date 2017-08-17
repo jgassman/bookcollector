@@ -3,9 +3,9 @@ import json
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Sum
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, render
 
-from gamecollection.forms import GameForm, SearchForm, SeriesForm, DeveloperForm, SystemForm
+from gamecollection.forms import SearchForm
 from gamecollection.models import Game, Genre, Series, Developer, System
 
 
@@ -160,47 +160,3 @@ def system_detail(request, system_id):
                'developerData': json.dumps({s.name: Game.objects.filter(developers=s, system=system).count() for s in system.developers}),
                'genreData': json.dumps({g.name: Game.objects.filter(genre=g, system=system).count() for g in system.genres})}
     return render(request, 'gamecollection/system_detail.html', context=context)
-
-
-@login_required
-def new_game(request):
-    if request.method == 'POST':
-        form = GameForm(request.POST)
-        if form.is_valid():
-            form.save()
-        if 'return' in request.POST:
-            return redirect('/gamecollection/games')
-    return render(request, 'gamecollection/new_game.html', {'form': GameForm()})
-
-
-@login_required
-def new_series(request):
-    if request.method == 'POST':
-        form = SeriesForm(request.POST)
-        if form.is_valid():
-            form.save()
-        if 'return' in request.POST:
-            return redirect('/gamecollection/series')
-    return render(request, 'gamecollection/new_series.html', {'form': SeriesForm()})
-
-
-@login_required
-def new_developer(request):
-    if request.method == 'POST':
-        form = DeveloperForm(request.POST)
-        if form.is_valid():
-            form.save()
-        if 'return' in request.POST:
-            return redirect('/gamecollection/developers')
-    return render(request, 'gamecollection/new_developer.html', {'form': DeveloperForm()})
-
-
-@login_required
-def new_system(request):
-    if request.method == 'POST':
-        form = SystemForm(request.POST)
-        if form.is_valid():
-            form.save()
-        if 'return' in request.POST:
-            return redirect('/gamecollection/systems')
-    return render(request, 'gamecollection/new_system.html', {'form': SystemForm()})
