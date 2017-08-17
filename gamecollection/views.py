@@ -6,7 +6,7 @@ from django.db.models import Sum
 from django.shortcuts import get_object_or_404, render
 
 from gamecollection.forms import SearchForm
-from gamecollection.models import Game, Genre, Series, Developer, System
+from gamecollection.models import Game, Genre, Series, Developer, System, AGE_RATING_CHOICES
 
 
 @login_required
@@ -14,7 +14,6 @@ def index(request):
     context = {
         'game_count': Game.objects.count(),
         'developer_count': Developer.objects.count(),
-        'series_count': Series.objects.count(),
         'system_count': System.objects.count(),
         'all_game_count': Game.objects.aggregate(Sum('copies')),
         'systemData': json.dumps({s.name: Game.objects.filter(system=s).count() for s in System.objects.all()}),
@@ -157,6 +156,6 @@ def developer_detail(request, developer_id):
 def system_detail(request, system_id):
     system = get_object_or_404(System, pk=system_id)
     context = {'system': system,
-               'developerData': json.dumps({s.name: Game.objects.filter(developers=s, system=system).count() for s in system.developers}),
+               'ageData': json.dumps({age[1]: Game.objects.filter(age_rating=age[0]).count() for age in AGE_RATING_CHOICES}),
                'genreData': json.dumps({g.name: Game.objects.filter(genre=g, system=system).count() for g in system.genres})}
     return render(request, 'gamecollection/system_detail.html', context=context)

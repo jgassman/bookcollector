@@ -1,5 +1,14 @@
 from django.db import models
 
+AGE_RATING_CHOICES = (
+    ('EC', 'Early Childhood'),
+    ('E', 'Everyone'),
+    ('K-A', 'Kids to Adults'),
+    ('E10+', 'Everyone 10+'),
+    ('T', 'Teen'),
+    ('M', 'Mature')
+)
+
 
 class Genre(models.Model):
     name = models.CharField(max_length=20)
@@ -149,6 +158,8 @@ class System(models.Model):
 class Game(models.Model):
     title = models.CharField(max_length=100)
     year_released = models.IntegerField()
+    age_rating = models.IntegerField()
+    age_rating = models.CharField(max_length=15, choices=AGE_RATING_CHOICES, default='E')
     developers = models.ManyToManyField(Developer)
     series = models.ForeignKey(Series, null=True, blank=True)
     system = models.ForeignKey(System)
