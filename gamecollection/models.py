@@ -155,6 +155,8 @@ class Game(models.Model):
     genre = models.ForeignKey(Genre)
     copies = models.IntegerField(default=1)
     digital = models.BooleanField(default=False)
+    needs_case = models.BooleanField(default=False)
+    needs_booklet = models.BooleanField(default=False)
     img_url = models.URLField(blank=True, null=True)
 
     def __str__(self):

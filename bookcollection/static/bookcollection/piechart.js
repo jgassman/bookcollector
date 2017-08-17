@@ -81,8 +81,16 @@ var drawPieChart = function(data, canvasId, legend) {
       {
         canvas:myCanvas,
         data:data,
-        colors:["#001b8a", "#0066e2", "#e2e2e2", "#b77c3a", "#844c00", '#000000', '#60605c', '#fff4b1', '#ffed86', '#ffdb00'],
-
+        colors:[
+          // Ravenclaw
+          '#001b8a', '#0066e2', '#e2e2e2', '#b77c3a', '#844c00',
+          // Hufflepuff
+          '#000000', '#60605c', '#fff4b1', '#ffed86', '#ffdb00',
+          // Slytherin
+          '#002f01', '#006302', '#009403', '#b0b0b0', '#e3e3e3',
+          // Gryffindor
+          '#5c0000', '#890000', '#c50000', '#fb7e00', '#ffa700',
+        ],
         legend:myLegend
       }
   );

@@ -35,6 +35,16 @@
           <span>Series:</span> {{ game.series }}
         </div>
       {% endif %}
+      {% if game.needs_case %}
+        <div class="detail case">
+          <span>[Needs Case]</span>
+        </div>
+      {% endif %}
+      {% if game.needs_booklet %}
+        <div class="detail booklet">
+          <span>[Needs Booklet]</span>
+        </div>
+      {% endif %}
     </article>
     {% endfor %}
     </ul>
