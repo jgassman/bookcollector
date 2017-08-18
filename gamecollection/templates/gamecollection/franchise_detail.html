@@ -1,27 +1,27 @@
 {% extends 'gamecollection/base.html' %}
 
 {% block content %}
-  <h1>{{ series.name }}</h1>
-  <p><span>Genre:</span> {{series.genre}}</p>
+  <h1>{{ franchise.name }}</h1>
+  <p><span>Genres:</span> {{franchise.genres|join:", "}}</p>
   <table class="fixed">
     <tr>
         <td>
-          {% if series.game_count == 1 %}
-            <h3>Games ({{series.game_count}} game)</h3>
+          {% if franchise.game_count == 1 %}
+            <h3>Games ({{franchise.game_count}} game)</h3>
           {% else %}
-            <h3>Games ({{series.game_count}} games)</h3>
+            <h3>Games ({{franchise.game_count}} games)</h3>
           {% endif %}
           <ul>
-            {% for game in series.games %}
+            {% for game in franchise.games %}
               <li><a href="{% url 'gamecollection:game_detail' game.id %}">{{ game.title }}</a></li>
             {% endfor %}
           </ul>
         </td>
         <td>
-          {% if series.systems %}
+          {% if franchise.systems %}
             <h3>Systems</h3>
             <ul>
-              {% for system in series.systems %}
+              {% for system in franchise.systems %}
                 <li><a href="{% url 'gamecollection:system_detail' system.id %}">{{ system.name }}</a></li>
               {% endfor %}
             </ul>

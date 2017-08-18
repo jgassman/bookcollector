@@ -6,7 +6,7 @@ from django.db.models import Sum
 from django.shortcuts import get_object_or_404, render
 
 from gamecollection.forms import SearchForm
-from gamecollection.models import Game, Genre, Series, Developer, System, AGE_RATING_CHOICES
+from gamecollection.models import Game, Genre, Franchise, Developer, System, AGE_RATING_CHOICES
 
 
 @login_required
@@ -49,24 +49,24 @@ def genres(request):
     return render(request, 'gamecollection/genres.html', {'all_genres': all_genres})
 
 @login_required
-def series(request):
+def franchises(request):
     if request.method == 'POST':
         form = SearchForm(request.POST)
         if form.is_valid():
             search_text = form.cleaned_data['search_text']
-            series = Series.objects.filter(name__icontains=search_text)
+            franchises = Franchise.objects.filter(name__icontains=search_text)
     else:
-        series = Series.objects.order_by('name')
-    paginator = Paginator(series, 25)
+        franchises = Franchise.objects.order_by('name')
+    paginator = Paginator(franchises, 25)
     page = request.GET.get('page')
     search_form = SearchForm()
     try:
-        all_series = paginator.page(page)
+        all_franchises = paginator.page(page)
     except PageNotAnInteger:
-        all_series = paginator.page(1)
+        all_franchises = paginator.page(1)
     except EmptyPage:
-        all_series = paginator.page(paginator.num_pages)
-    return render(request, 'gamecollection/series.html', {'all_series': all_series, 'search_form': search_form})
+        all_franchises = paginator.page(paginator.num_pages)
+    return render(request, 'gamecollection/franchises.html', {'all_franchises': all_franchises, 'search_form': search_form})
 
 
 @login_required
@@ -128,19 +128,19 @@ def genre_detail(request, genre_id):
     context = {
         'genre': genre,
         'game_count': Game.objects.filter(genre=genre).count(),
-        'series': [s for s in Series.objects.all() if s.genre == genre],
-        'series_count': sum([1 for s in Series.objects.all() if s.genre == genre]),
+        'franchises': [s for s in Franchise.objects.all() if s.genre == genre],
+        'franchise_count': sum([1 for s in Franchise.objects.all() if s.genre == genre]),
     }
     return render(request, 'gamecollection/genre_detail.html', context=context)
 
 
 @login_required
-def series_detail(request, series_id):
-    series = get_object_or_404(Series, pk=series_id)
-    context = {'series': series,
-               'systemData': json.dumps({s.name: Game.objects.filter(system=s, series=series).count() for s in series.systems}),
-               'genreData': json.dumps({g.name: Game.objects.filter(genre=g, series=series).count() for g in series.genres})}
-    return render(request, 'gamecollection/series_detail.html', context=context)
+def franchise_detail(request, franchise_id):
+    franchise = get_object_or_404(Franchise, pk=franchise_id)
+    context = {'franchise': franchise,
+               'systemData': json.dumps({s.name: Game.objects.filter(system=s, franchises=franchise).count() for s in franchise.systems}),
+               'genreData': json.dumps({g.name: Game.objects.filter(genre=g, franchises=franchise).count() for g in franchise.genres})}
+    return render(request, 'gamecollection/franchise_detail.html', context=context)
 
 
 @login_required
