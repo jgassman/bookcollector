@@ -14,8 +14,8 @@
       <p>{{system.developer_count}}</p>
     </div>
     <div class="box">
-      <h3>Total Number of Series</h3>
-      <p>{{system.series_count}}</p>
+      <h3>Total Number of Franchises</h3>
+      <p>{{system.franchise_count}}</p>
     </div>
     <div class="box">
       <h3>Games by Genre</h3>
@@ -59,11 +59,11 @@
           {% endif %}
         </td>
         <td>
-          {% if system.series %}
-            <h3>Series</h3>
+          {% if system.franchises %}
+            <h3>Franchises</h3>
             <ul>
-              {% for series in system.series %}
-                <li><a href="{% url 'gamecollection:series_detail' series.id %}">{{ series.name }}</a></li>
+              {% for franchise in system.franchises %}
+                <li><a href="{% url 'gamecollection:franchise_detail' franchise.id %}">{{ franchise.name }}</a></li>
               {% endfor %}
             </ul>
           {% endif %}

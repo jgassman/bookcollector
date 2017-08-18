@@ -32,9 +32,9 @@
           <span>[Digital]</span>
         </div>
       {% endif %}
-      {% if game.series %}
-        <div class="detail series">
-          <span>Series:</span> {{ game.series }}
+      {% if game.franchises.all %}
+        <div class="detail franchise">
+          <span>Franchises:</span> {{ game.franchises.all|join:", " }}
         </div>
       {% endif %}
       {% if game.needs_case %}

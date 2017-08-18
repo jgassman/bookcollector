@@ -21,7 +21,7 @@ class Genre(models.Model):
         return self.name
 
 
-class Series(models.Model):
+class Franchise(models.Model):
     name = models.CharField(max_length=100)
 
     @property
@@ -34,7 +34,10 @@ class Series(models.Model):
 
     @property
     def genre(self):
-        return self.game_set.all()[0].genre
+        try:
+            return self.game_set.all()[0].genre
+        except:
+            return None
 
     @property
     def systems(self):
@@ -54,7 +57,6 @@ class Series(models.Model):
         return self.name
 
     class Meta:
-        verbose_name_plural = "Series"
         ordering = ['name']
 
 
@@ -70,16 +72,16 @@ class Developer(models.Model):
         return self.game_set.count()
 
     @property
-    def series(self):
-        series_set = set()
+    def franchises(self):
+        franchise_set = set()
         for game in self.games:
-            if game.series:
-                series_set.add(game.series)
-        return series_set
+            for franchise in game.franchises.all():
+                franchise_set.add(franchise)
+        return franchise_set
 
     @property
-    def series_count(self):
-        return len(self.series)
+    def franchise_count(self):
+        return len(self.franchises)
 
     @property
     def genres(self):
@@ -118,16 +120,16 @@ class System(models.Model):
         return self.game_set.count()
 
     @property
-    def series(self):
-        series_set = set()
+    def franchises(self):
+        franchise_set = set()
         for game in self.games:
-            if game.series:
-                series_set.add(game.series)
-        return series_set
+            for franchise in game.franchises.all():
+                franchise_set.add(franchise)
+        return franchise_set
 
     @property
-    def series_count(self):
-        return len(self.series)
+    def franchise_count(self):
+        return len(self.franchises)
 
     @property
     def genres(self):
@@ -161,7 +163,7 @@ class Game(models.Model):
     age_rating = models.IntegerField()
     age_rating = models.CharField(max_length=15, choices=AGE_RATING_CHOICES, default='E')
     developers = models.ManyToManyField(Developer)
-    series = models.ForeignKey(Series, null=True, blank=True)
+    franchises = models.ManyToManyField(Franchise, blank=True)
     system = models.ForeignKey(System)
     genre = models.ForeignKey(Genre)
     copies = models.IntegerField(default=1)
