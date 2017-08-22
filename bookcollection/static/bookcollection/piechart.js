@@ -20,13 +20,6 @@ function drawPieSlice(ctx,centerX, centerY, radius, startAngle, endAngle, color 
     ctx.fill();
 }
 
-var myVinyls = {
-    "Classical music": 10,
-    "Alternative rock": 14,
-    "Pop": 2,
-    "Jazz": 12
-};
-
 var Piechart = function(options){
     this.options = options;
     this.canvas = options.canvas;
@@ -55,23 +48,23 @@ var Piechart = function(options){
 
       console.log(keys);
 
-      for (categ in keys){
+      for (categ in keys) {
         console.log(keys[categ])
-          val = this.options.data[keys[categ]];
-          var slice_angle = 2 * Math.PI * val / total_value;
+        val = this.options.data[keys[categ]];
+        var slice_angle = 2 * Math.PI * val / total_value;
 
-          drawPieSlice(
-              this.ctx,
-              this.canvas.width/2,
-              this.canvas.height/2,
-              Math.min(this.canvas.width/2,this.canvas.height/2),
-              start_angle,
-              start_angle+slice_angle,
-              this.colors[color_index%this.colors.length]
-          );
+        drawPieSlice(
+            this.ctx,
+            this.canvas.width/2,
+            this.canvas.height/2,
+            Math.min(this.canvas.width/2,this.canvas.height/2),
+            start_angle,
+            start_angle+slice_angle,
+            this.colors[color_index%this.colors.length]
+        );
 
-          start_angle += slice_angle;
-          color_index++;
+        start_angle += slice_angle;
+        color_index++;
       }
       if (this.options.legend) {
           color_index = 0;
