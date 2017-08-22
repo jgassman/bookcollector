@@ -2,8 +2,8 @@ from django.db import models
 
 AGE_RATING_CHOICES = (
     ('EC', 'Early Childhood'),
-    ('E', 'Everyone'),
     ('K-A', 'Kids to Adults'),
+    ('E', 'Everyone'),
     ('E10+', 'Everyone 10+'),
     ('T', 'Teen'),
     ('M', 'Mature')
@@ -19,6 +19,9 @@ class Genre(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ['name']
 
 
 class Franchise(models.Model):
