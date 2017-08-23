@@ -42,14 +42,10 @@ var Piechart = function(options){
           keys.push(k)
         }
       }
-      console.log(keys);
 
       keys.sort();
 
-      console.log(keys);
-
       for (categ in keys) {
-        console.log(keys[categ])
         val = this.options.data[keys[categ]];
         var slice_angle = 2 * Math.PI * val / total_value;
 
