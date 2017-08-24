@@ -15,9 +15,12 @@ def index(request):
         'book_count': Book.objects.count(),
         'author_count': Author.objects.count(),
         'series_count': Series.objects.count(),
-        'genreData': json.dumps({g.name: Book.objects.filter(genre=g).count() for g in Genre.objects.all()}),
         'ageData': json.dumps({age[0]: Book.objects.filter(age_group=age[0]).count() for age in AGE_GROUP_CHOICES})
     }
+    context['genreData'] = {}
+    for g in Genre.objects.all():
+        for s in g.subgenre_set.all():
+            context['genreData'][g.name + ' - ' + s.name] = Book.objects.filter(genre=g, subgenre=s).count()
     return render(request, 'bookcollection/index.html', context=context)
 
 
