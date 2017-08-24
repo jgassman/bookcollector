@@ -128,7 +128,7 @@ def genre_detail(request, genre_id):
 @login_required
 def series_detail(request, series_id):
     series = get_object_or_404(Series, pk=series_id)
-    series_books = series.book_set.all()
+    series_books = series.book_set.all().order_by('series_number')
     return render(request, 'bookcollection/series_detail.html', {'series': series, 'series_books': series_books})
 
 
