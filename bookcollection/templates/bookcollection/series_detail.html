@@ -5,7 +5,7 @@
   <p><span>Author:</span> {{series.authors|join:", " }}</p>
   <ol>
     {% for book in series_books %}
-      <li>{{ book.title }}</li>
+      <li><a href="{% url 'bookcollection:book_detail' book.id %}">{{ book.title }}</a></li>
     {% endfor %}
   </ol>
 {% endblock %}
