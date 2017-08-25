@@ -9,7 +9,7 @@ AGE_GROUP_CHOICES = (
 
 
 class Genre(models.Model):
-    name = models.CharField(max_length=15)
+    name = models.CharField(max_length=25)
 
     @property
     def book_count(self):
@@ -70,6 +70,7 @@ class Author(models.Model):
         return self.last_name
 
     class Meta:
+        unique_together = ('first_name', 'last_name',)
         ordering = ['last_name', 'first_name']
 
 
@@ -125,4 +126,5 @@ class Book(models.Model):
         return self.title
 
     class Meta:
+        unique_together = ('title', 'year_published',)
         ordering = ['title']
