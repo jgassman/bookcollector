@@ -37,6 +37,9 @@
       {% if book.audiobook %}
         <p><span>[audiobook]</span></p>
       {% endif %}
+      {% if book.subgenre.genre != book.genre %}
+        <p><span>[Genre/Subgenre Mismatch]</span></p>
+      {% endif %}
     </article>
     {% endfor %}
     </ul>
