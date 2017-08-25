@@ -23,7 +23,7 @@ class Genre(models.Model):
 
 
 class Subgenre(models.Model):
-    name = models.CharField(max_length=15)
+    name = models.CharField(max_length=25)
     genre = models.ForeignKey(Genre)
 
     def __str__(self):
