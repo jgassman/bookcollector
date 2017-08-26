@@ -6,7 +6,8 @@ AGE_RATING_CHOICES = (
     ('E', 'Everyone'),
     ('E10+', 'Everyone 10+'),
     ('T', 'Teen'),
-    ('M', 'Mature')
+    ('M', 'Mature'),
+    ('GA', 'General Audiences')
 )
 
 
