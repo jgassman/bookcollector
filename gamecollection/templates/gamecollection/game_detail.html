@@ -22,6 +22,11 @@
       [Needs Booklet]
     {% endif %}
   </p>
+  {% if not game.needs_booklet and not game.needs_case %}
+    <div class="detail complete">
+      <p>[Complete]</p>
+    </div>
+  {% endif %}
 </div>
 <form method="post">
   {% csrf_token %}

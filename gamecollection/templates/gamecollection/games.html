@@ -47,6 +47,11 @@
           <span>[Needs Booklet]</span>
         </div>
       {% endif %}
+      {% if not game.needs_booklet and not game.needs_case %}
+        <div class="detail complete">
+          <span>[Complete]</span>
+        </div>
+      {% endif %}
     </article>
     {% endfor %}
     </ul>
