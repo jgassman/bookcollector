@@ -8,6 +8,11 @@ class BookForm(forms.ModelForm):
         model = Book
         fields = '__all__'
 
+    def clean(self):
+        if self.cleaned_data.get('subgenre').genre != self.cleaned_data.get('genre'):
+            raise forms.ValidationError("Genre for subgenre must match book genre")
+        return self.cleaned_data
+
 
 class AuthorForm(forms.ModelForm):
     class Meta:
