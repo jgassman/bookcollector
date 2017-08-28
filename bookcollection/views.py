@@ -3,9 +3,9 @@ import json
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, render
 
-from .forms import AuthorForm, BookForm, SeriesForm, SearchForm
+from .forms import SearchForm
 from .models import Author, Book, Series, Genre, Subgenre, AGE_GROUP_CHOICES
 
 
@@ -99,10 +99,9 @@ def book_detail(request, book_id):
 @login_required
 def author_detail(request, author_id):
     author = get_object_or_404(Author, pk=author_id)
-    author_books = author.book_set.all()
     context = {
         'author': author,
-        'author_books': author_books,
+        'author_books': author.book_set.all().order_by('title'),
         'genreData': json.dumps({g.name: Book.objects.filter(genre=g).count() for g in author.genres}),
         'ageData': json.dumps({age[0]: Book.objects.filter(authors=author, age_group=age[0]).count() for age in AGE_GROUP_CHOICES})
     }
@@ -115,6 +114,7 @@ def genre_detail(request, genre_id):
     context = {
         'genre': genre,
         'book_count': Book.objects.filter(genre=genre).count(),
+        'books': genre.book_set.all().order_by('title'),
         'authors': [a for a in Author.objects.all() if genre in a.genres],
         'author_count': sum([1 for a in Author.objects.all() if genre in a.genres]),
         'series': [s for s in Series.objects.all() if s.genre == genre],
@@ -130,36 +130,3 @@ def series_detail(request, series_id):
     series = get_object_or_404(Series, pk=series_id)
     series_books = series.book_set.all().order_by('series_number')
     return render(request, 'bookcollection/series_detail.html', {'series': series, 'series_books': series_books})
-
-
-@login_required
-def new_book(request):
-    if request.method == 'POST':
-        form = BookForm(request.POST)
-        if form.is_valid():
-            form.save()
-        if 'return' in request.POST:
-            return redirect('/bookcollection/books')
-    return render(request, 'bookcollection/new_book.html', {'form': BookForm()})
-
-
-@login_required
-def new_author(request):
-    if request.method == 'POST':
-        form = AuthorForm(request.POST)
-        if form.is_valid():
-            form.save()
-        if 'return' in request.POST:
-            return redirect('/bookcollection/authors')
-    return render(request, 'bookcollection/new_author.html', {'form': AuthorForm()})
-
-
-@login_required
-def new_series(request):
-    if request.method == 'POST':
-        form = SeriesForm(request.POST)
-        if form.is_valid():
-            form.save()
-        if 'return' in request.POST:
-            return redirect('/bookcollection/series')
-    return render(request, 'bookcollection/new_series.html', {'form': SeriesForm()})

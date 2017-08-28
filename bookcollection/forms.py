@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Author, Book, Series
+from .models import Book
 
 
 class BookForm(forms.ModelForm):
@@ -12,18 +12,6 @@ class BookForm(forms.ModelForm):
         if self.cleaned_data.get('subgenre').genre != self.cleaned_data.get('genre'):
             raise forms.ValidationError("Genre for subgenre must match book genre")
         return self.cleaned_data
-
-
-class AuthorForm(forms.ModelForm):
-    class Meta:
-        model = Author
-        fields = '__all__'
-
-
-class SeriesForm(forms.ModelForm):
-    class Meta:
-        model = Series
-        fields = '__all__'
 
 
 class SearchForm(forms.Form):

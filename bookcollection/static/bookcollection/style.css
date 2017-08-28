@@ -32,6 +32,16 @@ p a {
     position: relative;
 }
 
+.small-listing {
+    margin-top: 15px;
+    background-color: #f6f6f6;
+    padding: 15px 50px;
+    min-height: 145px;
+    height: auto;
+    position: relative;
+    overflow: hidden;
+}
+
 .listing:hover {
     background-color: #f3f3f3;
 }
@@ -41,6 +51,15 @@ p a {
     width: 105px;
     float: left;
     margin-right: 45px;
+    border-radius: 5px;
+}
+
+.small-listing img {
+    height: 150px;
+    width: 105px;
+    float: left;
+    margin-bottom: 20px;
+    margin-right: 20px;
     border-radius: 5px;
 }
 
@@ -163,7 +182,7 @@ input[type=submit]{
 
 .pagination {
   padding-top: 10px;
-  float: right;
+  text-align: center;
 }
 
 .book-cover {
