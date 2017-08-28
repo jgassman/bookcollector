@@ -3,9 +3,9 @@ import json
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, render
 
-from .forms import AuthorForm, BookForm, SeriesForm, SearchForm
+from .forms import SearchForm
 from .models import Author, Book, Series, Genre, Subgenre, AGE_GROUP_CHOICES
 
 
@@ -130,36 +130,3 @@ def series_detail(request, series_id):
     series = get_object_or_404(Series, pk=series_id)
     series_books = series.book_set.all().order_by('series_number')
     return render(request, 'bookcollection/series_detail.html', {'series': series, 'series_books': series_books})
-
-
-@login_required
-def new_book(request):
-    if request.method == 'POST':
-        form = BookForm(request.POST)
-        if form.is_valid():
-            form.save()
-        if 'return' in request.POST:
-            return redirect('/bookcollection/books')
-    return render(request, 'bookcollection/new_book.html', {'form': BookForm()})
-
-
-@login_required
-def new_author(request):
-    if request.method == 'POST':
-        form = AuthorForm(request.POST)
-        if form.is_valid():
-            form.save()
-        if 'return' in request.POST:
-            return redirect('/bookcollection/authors')
-    return render(request, 'bookcollection/new_author.html', {'form': AuthorForm()})
-
-
-@login_required
-def new_series(request):
-    if request.method == 'POST':
-        form = SeriesForm(request.POST)
-        if form.is_valid():
-            form.save()
-        if 'return' in request.POST:
-            return redirect('/bookcollection/series')
-    return render(request, 'bookcollection/new_series.html', {'form': SeriesForm()})
