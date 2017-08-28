@@ -1,11 +1,18 @@
 {% extends 'bookcollection/base.html' %}
 
 {% block content %}
+
   <h1>{{ series.name }}</h1>
   <p><span>Author:</span> {{series.authors|join:", " }}</p>
-  <ol>
-    {% for book in series_books %}
-      <li><a href="{% url 'bookcollection:book_detail' book.id %}">{{ book.title }}</a></li>
-    {% endfor %}
-  </ol>
+
+  {% if series_books %}
+    <article class="small-listing">
+      {% for book in series_books %}
+        <a href="{% url 'bookcollection:book_detail' book.id %}"><img class="book-cover" src={{ book.img_url }} alt={{ book.title }}></a>
+      {% endfor %}
+    </article>
+  {% else %}
+    <p>No books yet!</p>
+  {% endif %}
+
 {% endblock %}

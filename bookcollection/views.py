@@ -99,10 +99,9 @@ def book_detail(request, book_id):
 @login_required
 def author_detail(request, author_id):
     author = get_object_or_404(Author, pk=author_id)
-    author_books = author.book_set.all()
     context = {
         'author': author,
-        'author_books': author_books,
+        'author_books': author.book_set.all().order_by('title'),
         'genreData': json.dumps({g.name: Book.objects.filter(genre=g).count() for g in author.genres}),
         'ageData': json.dumps({age[0]: Book.objects.filter(authors=author, age_group=age[0]).count() for age in AGE_GROUP_CHOICES})
     }
@@ -115,6 +114,7 @@ def genre_detail(request, genre_id):
     context = {
         'genre': genre,
         'book_count': Book.objects.filter(genre=genre).count(),
+        'books': genre.book_set.all().order_by('title'),
         'authors': [a for a in Author.objects.all() if genre in a.genres],
         'author_count': sum([1 for a in Author.objects.all() if genre in a.genres]),
         'series': [s for s in Series.objects.all() if s.genre == genre],

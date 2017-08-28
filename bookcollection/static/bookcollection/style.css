@@ -32,11 +32,27 @@ p a {
     position: relative;
 }
 
+.small-listing {
+    margin-top: 15px;
+    background-color: #f6f6f6;
+    padding: 15px 50px;
+    min-height: 145px;
+    position: relative;
+}
+
 .listing:hover {
     background-color: #f3f3f3;
 }
 
 .listing img {
+    height: 150px;
+    width: 105px;
+    float: left;
+    margin-right: 45px;
+    border-radius: 5px;
+}
+
+.small-listing img {
     height: 150px;
     width: 105px;
     float: left;
