@@ -37,7 +37,9 @@ p a {
     background-color: #f6f6f6;
     padding: 15px 50px;
     min-height: 145px;
+    height: auto;
     position: relative;
+    overflow: hidden;
 }
 
 .listing:hover {
@@ -56,7 +58,8 @@ p a {
     height: 150px;
     width: 105px;
     float: left;
-    margin-right: 45px;
+    margin-bottom: 20px;
+    margin-right: 20px;
     border-radius: 5px;
 }
 
@@ -179,7 +182,7 @@ input[type=submit]{
 
 .pagination {
   padding-top: 10px;
-  float: right;
+  text-align: center;
 }
 
 .book-cover {
