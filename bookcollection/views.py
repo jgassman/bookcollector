@@ -122,6 +122,11 @@ def genre_detail(request, genre_id):
         'genreData': json.dumps({g.name: Book.objects.filter(subgenre=g).count() for g in Subgenre.objects.filter(genre=genre)}),
         'ageData': json.dumps({age[0]: Book.objects.filter(genre=genre, age_group=age[0]).count() for age in AGE_GROUP_CHOICES})
     }
+    if request.method == 'POST':
+        if 'subgenre' in request.POST:
+            context['show_subs'] = True
+        else:
+            context['show_subs'] = False
     return render(request, 'bookcollection/genre_detail.html', context=context)
 
 

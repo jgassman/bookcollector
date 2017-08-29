@@ -7,11 +7,32 @@
   </div>
 
   {% if books %}
-    <article class="small-listing">
-      {% for book in books %}
-        <a href="{% url 'bookcollection:book_detail' book.id %}"><img class="book-cover" src={{ book.img_url }} alt={{ book.title }}></a>
+    {% if show_subs %}
+      {% for subgenre in genre.subgenre_set.all %}
+        <h2>{{subgenre}}</h2>
+        <article class="small-listing">
+          {% for book in subgenre.book_set.all %}
+            <a href="{% url 'bookcollection:book_detail' book.id %}"><img class="book-cover" src={{ book.img_url }} alt={{ book.title }}></a>
+          {% endfor %}
+        </article>
       {% endfor %}
-    </article>
+      <br>
+      <form method="post">
+        {% csrf_token %}
+        <input class="button" type="submit" value="Hide Subgenres" />
+      </form>
+    {% else %}
+      <article class="small-listing">
+        {% for book in books %}
+          <a href="{% url 'bookcollection:book_detail' book.id %}"><img class="book-cover" src={{ book.img_url }} alt={{ book.title }}></a>
+        {% endfor %}
+      </article>
+      <br>
+      <form method="post">
+        {% csrf_token %}
+        <input class="button" type="submit" name='subgenre' value="Shelf by Subgenre" />
+      </form>
+    {% endif %}
   {% else %}
     <p>No books yet!</p>
   {% endif %}
