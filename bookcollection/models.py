@@ -84,14 +84,14 @@ class Series(models.Model):
     @property
     def genre(self):
         try:
-            return Book.objects.filter(series=self, series_number=1)[0].genre
+            return Book.objects.filter(series=self)[0].genre
         except:
             return None
 
     @property
     def subgenre(self):
         try:
-            return Book.objects.filter(series=self, series_number=1)[0].subgenre
+            return Book.objects.filter(series=self)[0].subgenre
         except:
             return None
 
