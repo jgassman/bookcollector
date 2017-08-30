@@ -2,7 +2,7 @@ cycler==0.10.0
 dj-database-url==0.4.2
 Django==1.11.1
 django-simple-select==0.3
-django-smart-select==1.5.2
+django-smart-selects==1.5.2
 gunicorn==19.7.1
 psycopg2==2.7.1
 pyparsing==2.1.0
