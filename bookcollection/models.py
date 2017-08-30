@@ -1,5 +1,7 @@
 from django.db import models
 
+from smart_selects.db_fields import ChainedForeignKey
+
 AGE_GROUP_CHOICES = (
     ('Children', 'Children'),
     ('Middle Grade', 'Middle Grade'),
@@ -117,7 +119,13 @@ class Book(models.Model):
     series = models.ForeignKey(Series, models.SET_NULL, blank=True, null=True)
     series_number = models.IntegerField(blank=True, null=True)
     genre = models.ForeignKey(Genre, null=True)
-    subgenre = models.ForeignKey(Subgenre, null=True, blank=True)
+    subgenre = ChainedForeignKey(
+        Subgenre,
+        chained_field="genre",
+        chained_model_field="genre",
+        show_all=False,
+        auto_choose=True,
+        sort=True)
     age_group = models.CharField(max_length=15, choices=AGE_GROUP_CHOICES, default='Children')
     audiobook = models.BooleanField()
     img_url = models.URLField(blank=True, null=True)
