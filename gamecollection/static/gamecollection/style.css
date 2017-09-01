@@ -151,19 +151,26 @@ label {
 }
 
 .stat-grid {
-  display: grid;
-  grid-template-columns: 325px 325px 325px;
-  grid-gap: 10px;
-  background-color: #fff;
-  color: #444;
+    margin-top: 15px;
+    min-height: 145px;
+    height: auto;
+    position: relative;
+    overflow: hidden;
+    padding-top: 10px;
 }
 
 .box {
   background-color: #444;
   color: #fff;
   border-radius: 5px;
-  padding: 20px;
+  padding-left: 20px;
+  padding-bottom: 20px;
   font-size: 150%;
+  width: 300px;
+  float: left;
+  margin-bottom: 20px;
+  margin-right: 10px;
+  border-radius: 5px;
 }
 
 input[type=submit]{

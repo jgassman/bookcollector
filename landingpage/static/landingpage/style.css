@@ -54,28 +54,35 @@ p a {
 }
 
 .stat-grid {
-  display: grid;
-  grid-template-columns: 485px 485px;
-  grid-template-rows: 250px 250px;
-  grid-gap: 10px;
-  background-color: #fff;
-  color: #444;
+    margin-top: 15px;
+    min-height: 145px;
+    height: auto;
+    position: relative;
+    overflow: hidden;
+    padding-top: 10px;
 }
 
 .box {
+  background-color: #444;
+  color: #fff;
   border-radius: 5px;
-  padding: 20px;
+  padding-left: 20px;
+  padding-bottom: 20px;
   font-size: 200%;
+  width: 450px;
+  float: left;
+  margin-bottom: 20px;
+  margin-right: 10px;
+  border-radius: 5px;
+  text-align: center;
 }
 
 .books {
   background-color: #0066e2;
   color: #e2e2e2;
-  text-align: center;
 }
 
 .videogames {
   background-color: #006302;
   color: #b0b0b0;
-  text-align: center;
 }
