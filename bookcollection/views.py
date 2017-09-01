@@ -125,8 +125,9 @@ def genre_detail(request, genre_id):
     if request.method == 'POST':
         if 'subgenre' in request.POST:
             context['show_subs'] = True
-        else:
-            context['show_subs'] = False
+        elif 'age_groups' in request.POST:
+            context['show_ages'] = True
+            context['age_data'] = [(age[0], Book.objects.filter(genre=genre, age_group=age[0])) for age in AGE_GROUP_CHOICES]
     return render(request, 'bookcollection/genre_detail.html', context=context)
 
 

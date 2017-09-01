@@ -21,6 +21,22 @@
         {% csrf_token %}
         <input class="button" type="submit" value="Hide Subgenres" />
       </form>
+    {% elif show_ages %}
+      {% for age, age_books in age_data %}
+        {% if age_books %}
+          <h2>{{age}}</h2>
+          <article class="small-listing">
+            {% for book in age_books %}
+              <a href="{% url 'bookcollection:book_detail' book.id %}"><img class="book-cover" src={{ book.img_url }} alt={{ book.title }}></a>
+            {% endfor %}
+          </article>
+        {% endif %}
+      {% endfor %}
+      <br>
+      <form method="post">
+        {% csrf_token %}
+        <input class="button" type="submit" value="Hide Age Groups" />
+      </form>
     {% else %}
       <article class="small-listing">
         {% for book in books %}
@@ -31,6 +47,7 @@
       <form method="post">
         {% csrf_token %}
         <input class="button" type="submit" name='subgenre' value="Shelf by Subgenre" />
+        <input class="button" type="submit" name='age_groups' value="Shelf by Age Group" />
       </form>
     {% endif %}
   {% else %}
