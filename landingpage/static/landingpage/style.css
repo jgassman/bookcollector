@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css?family=Acme');
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+div,
+span,
+a { font-family: 'Acme'; line-height: 1.5; text-decoration: none; }
+
+p a {
+  color: #009403;
+}
+
+.menu {
+    height: 4em;
+    background-color: #890000;
+}
+
+.menu h1 {
+    padding: 7px 0 0 20px;
+    color: #ffa700;
+    font-size: 2.1em;
+    position: relative;
+    left: -12px;
+    bottom: 15px;
+}
+
+.menu a,
+.menu .links {
+    display: inline-block;
+}
+
+.menu a {
+    line-height: 1;
+    padding: 0 15px;
+    color: #b0b0b0;
+    opacity: 0.85;
+}
+
+.container {
+    max-width: 1024px;
+    min-height: 100vh;
+    background: #f9f9f9;
+    margin: 0 auto;
+}
+
+.body {
+    padding: 15px;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: 485px 485px;
+  grid-template-rows: 250px 250px;
+  grid-gap: 10px;
+  background-color: #fff;
+  color: #444;
+}
+
+.box {
+  border-radius: 5px;
+  padding: 20px;
+  font-size: 200%;
+}
+
+.books {
+  background-color: #0066e2;
+  color: #e2e2e2;
+  text-align: center;
+}
+
+.videogames {
+  background-color: #006302;
+  color: #b0b0b0;
+  text-align: center;
+}

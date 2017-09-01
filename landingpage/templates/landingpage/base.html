@@ -1,0 +1,17 @@
+{% load static %}
+
+<head>
+  <link rel="stylesheet" type="text/css" href="/static/landingpage/style.css">
+</head>
+
+<div class="container">
+  <div class="menu">
+    <a href="/bookcollection/">
+      <h1> Jessica's Collections </h1>
+    </a>
+  </div>
+  <div class="body">
+    {% block content %}{% endblock %}
+  </div>
+</div>
+
