@@ -9,6 +9,11 @@
     <a href="">
       <h1> Jessica's Collections </h1>
     </a>
+    <div class="links">
+      {%if user.is_authenticated %}
+        <a href="{% url 'logout' %}"> Log out </a>
+      {% endif %}
+    </div>
   </div>
   <div class="body">
     {% block content %}{% endblock %}
