@@ -38,8 +38,19 @@ p a {
 .menu a {
     line-height: 1;
     padding: 0 15px;
-    color: #b0b0b0;
+    color: #ffa700;
     opacity: 0.85;
+}
+
+.menu .links {
+  float: right;
+  padding-right: 30px;
+  padding-top: 43px;
+}
+
+.menu .links a {
+    position: relative;
+    bottom: 5px;
 }
 
 .container {
