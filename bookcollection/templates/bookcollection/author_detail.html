@@ -19,9 +19,15 @@
   <br>
 
   <div class='stat-grid'>
-    <div class="box"> <h3>Books</h3> <p>{{author.book_count}}</p> </div>
-    <div class="box"> <h3>Genres</h3> <p>{{author.genre_count}}</p> </div>
-    <div class="box"> <h3>Series</h3> <p>{{author.series_count}}</p> </div>
+    <a class="box" href='{% url 'bookcollection:author_books' author.id %}'>
+      <h3>Books</h3> <p>{{author.book_count}}</p>
+    </a>
+    <a class="box" href='{% url 'bookcollection:author_genres' author.id %}'>
+      <h3>Genres</h3> <p>{{author.genre_count}}</p>
+    </a>
+    <a class="box" href='{% url 'bookcollection:author_series' author.id %}'>
+      <h3>Series</h3> <p>{{author.series_count}}</p>
+    </a>
     <div class="box">
       <h3>Books by Genre</h3>
       <canvas id="genreCanvas"></canvas>

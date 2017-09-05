@@ -80,6 +80,22 @@ def books(request):
 
 
 @login_required
+def author_books(request, author_id):
+    author = get_object_or_404(Author, pk=author_id)
+    books = Book.objects.filter(authors=author).order_by('title')
+    paginator = Paginator(books, 25)
+    page = request.GET.get('page')
+    search_form = SearchForm()
+    try:
+        all_books = paginator.page(page)
+    except PageNotAnInteger:
+        all_books = paginator.page(1)
+    except EmptyPage:
+        all_books = paginator.page(paginator.num_pages)
+    return render(request, 'bookcollection/books.html', {'all_books': all_books, 'search_form': search_form})
+
+
+@login_required
 def genre_books(request, genre_id):
     genre = get_object_or_404(Genre, pk=genre_id)
     books = Book.objects.filter(genre=genre).order_by('title')
@@ -102,6 +118,13 @@ def genres(request):
 
 
 @login_required
+def author_genres(request, author_id):
+    author = get_object_or_404(Author, pk=author_id)
+    all_genres = [g for g in Genre.objects.all() if g in author.genres]
+    return render(request, 'bookcollection/genres.html', {'all_genres': all_genres})
+
+
+@login_required
 def series(request):
     if request.method == 'POST':
         form = SearchForm(request.POST)
@@ -110,6 +133,22 @@ def series(request):
             series = Series.objects.filter(name__icontains=search_text)
     else:
         series = Series.objects.order_by('name')
+    paginator = Paginator(series, 25)
+    page = request.GET.get('page')
+    search_form = SearchForm()
+    try:
+        all_series = paginator.page(page)
+    except PageNotAnInteger:
+        all_series = paginator.page(1)
+    except EmptyPage:
+        all_series = paginator.page(paginator.num_pages)
+    return render(request, 'bookcollection/series.html', {'all_series': all_series, 'search_form': search_form})
+
+
+@login_required
+def author_series(request, author_id):
+    author = get_object_or_404(Author, pk=author_id)
+    series = [s for s in Series.objects.all() if author in s.authors]
     paginator = Paginator(series, 25)
     page = request.GET.get('page')
     search_form = SearchForm()

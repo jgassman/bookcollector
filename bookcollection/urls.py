@@ -10,10 +10,13 @@ urlpatterns = [
     url(r'^authors/genre/(?P<genre_id>[0-9]+)/$', views.genre_authors, name='genre_authors'),
     url(r'^books/$', views.books, name='books'),
     url(r'^books/(?P<book_id>[0-9]+)/$', views.book_detail, name='book_detail'),
+    url(r'^books/author/(?P<author_id>[0-9]+)/$', views.author_books, name='author_books'),
     url(r'^books/genre/(?P<genre_id>[0-9]+)/$', views.genre_books, name='genre_books'),
     url(r'^genres/$', views.genres, name='genres'),
     url(r'^genres/(?P<genre_id>[0-9]+)/$', views.genre_detail, name='genre_detail'),
+    url(r'^genres/author/(?P<author_id>[0-9]+)/$', views.author_genres, name='author_genres'),
     url(r'^series/$', views.series, name='series'),
     url(r'^series/(?P<series_id>[0-9]+)/$', views.series_detail, name='series_detail'),
+    url(r'^series/author/(?P<author_id>[0-9]+)/$', views.author_series, name='author_series'),
     url(r'^series/genre/(?P<genre_id>[0-9]+)/$', views.genre_series, name='genre_series'),
 ]
