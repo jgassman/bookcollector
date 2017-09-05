@@ -43,6 +43,22 @@ def authors(request):
 
 
 @login_required
+def genre_authors(request, genre_id):
+    genre = get_object_or_404(Genre, pk=genre_id)
+    authors = [a for a in Author.objects.all() if genre in a.genres]
+    paginator = Paginator(authors, 25)
+    page = request.GET.get('page')
+    search_form = SearchForm()
+    try:
+        all_authors = paginator.page(page)
+    except PageNotAnInteger:
+        all_authors = paginator.page(1)
+    except EmptyPage:
+        all_authors = paginator.page(paginator.num_pages)
+    return render(request, 'bookcollection/authors.html', {'all_authors': all_authors, 'search_form': search_form})
+
+
+@login_required
 def books(request):
     if request.method == 'POST':
         form = SearchForm(request.POST)
@@ -51,6 +67,22 @@ def books(request):
             books = Book.objects.filter(title__icontains=search_text)
     else:
         books = Book.objects.order_by('title')
+    paginator = Paginator(books, 25)
+    page = request.GET.get('page')
+    search_form = SearchForm()
+    try:
+        all_books = paginator.page(page)
+    except PageNotAnInteger:
+        all_books = paginator.page(1)
+    except EmptyPage:
+        all_books = paginator.page(paginator.num_pages)
+    return render(request, 'bookcollection/books.html', {'all_books': all_books, 'search_form': search_form})
+
+
+@login_required
+def genre_books(request, genre_id):
+    genre = get_object_or_404(Genre, pk=genre_id)
+    books = Book.objects.filter(genre=genre).order_by('title')
     paginator = Paginator(books, 25)
     page = request.GET.get('page')
     search_form = SearchForm()
@@ -78,6 +110,22 @@ def series(request):
             series = Series.objects.filter(name__icontains=search_text)
     else:
         series = Series.objects.order_by('name')
+    paginator = Paginator(series, 25)
+    page = request.GET.get('page')
+    search_form = SearchForm()
+    try:
+        all_series = paginator.page(page)
+    except PageNotAnInteger:
+        all_series = paginator.page(1)
+    except EmptyPage:
+        all_series = paginator.page(paginator.num_pages)
+    return render(request, 'bookcollection/series.html', {'all_series': all_series, 'search_form': search_form})
+
+
+@login_required
+def genre_series(request, genre_id):
+    genre = get_object_or_404(Genre, pk=genre_id)
+    series = [s for s in Series.objects.all() if s.genre == genre]
     paginator = Paginator(series, 25)
     page = request.GET.get('page')
     search_form = SearchForm()

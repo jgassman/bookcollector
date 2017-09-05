@@ -57,9 +57,15 @@
   <br>
 
   <div class='stat-grid'>
-    <div class="box"> <h3>Books</h3> <p>{{book_count}}</p> </div>
-    <div class="box"> <h3>Authors</h3> <p>{{author_count}}</p> </div>
-    <div class="box"> <h3>Series</h3> <p>{{series_count}}</p> </div>
+    <a class="box" href='{% url 'bookcollection:genre_books' genre.id %}'>
+      <h3>Books</h3> <p>{{book_count}}</p>
+    </a>
+    <a class="box" href='{% url 'bookcollection:genre_authors' genre.id %}'>
+      <h3>Authors</h3> <p>{{author_count}}</p>
+    </a>
+    <a class="box" href='{% url 'bookcollection:genre_series' genre.id %}'>
+      <h3>Series</h3> <p>{{series_count}}</p>
+    </a>
     <div class="box">
       <h3>Books by Subgenre</h3>
       <canvas id="genreCanvas"></canvas>
