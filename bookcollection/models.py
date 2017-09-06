@@ -35,6 +35,13 @@ class Subgenre(models.Model):
         ordering = ['name', 'genre']
 
 
+class Tag(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+
 class Author(models.Model):
     first_name = models.CharField(max_length=50, null=True, blank=True)
     last_name = models.CharField(max_length=50)
@@ -129,6 +136,7 @@ class Book(models.Model):
     age_group = models.CharField(max_length=15, choices=AGE_GROUP_CHOICES, default='Children')
     audiobook = models.BooleanField()
     img_url = models.URLField(blank=True, null=True)
+    tags = models.ManyToManyField(Tag)
 
     def __str__(self):
         return self.title

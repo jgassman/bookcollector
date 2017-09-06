@@ -6,7 +6,7 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404, render
 
 from .forms import SearchForm
-from .models import Author, Book, Series, Genre, Subgenre, AGE_GROUP_CHOICES
+from .models import Author, Book, Series, Genre, Subgenre, AGE_GROUP_CHOICES, Tag
 
 
 @login_required
@@ -223,3 +223,16 @@ def series_detail(request, series_id):
     series = get_object_or_404(Series, pk=series_id)
     series_books = series.book_set.all().order_by('series_number')
     return render(request, 'bookcollection/series_detail.html', {'series': series, 'series_books': series_books})
+
+
+@login_required
+def tags(request):
+    tags = Tag.objects.all()
+    return render(request, 'bookcollection/tags.html', {'tags': tags})
+
+
+@login_required
+def tag_detail(request, tag_id):
+    tag = get_object_or_404(Tag, pk=tag_id)
+    tag_books = tag.book_set.all()
+    return render(request, 'bookcollection/tag_detail.html', {'tag': tag, 'tag_books': tag_books})
