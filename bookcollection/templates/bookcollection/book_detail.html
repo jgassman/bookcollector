@@ -27,4 +27,11 @@
   {% if book.series %}
     <p>See more books in the <a href="{% url 'bookcollection:series_detail' book.series.id %}">{{ book.series.name }}</a> series</p>
   {% endif %}
+  {% if book.tags.all %}
+    <p>Tags:
+      {% for tag in book.tags.all %}
+        <a href="{% url 'bookcollection:tag_detail' tag.id %}">{{ tag }} </a>|
+      {% endfor %}
+    </p>
+  {% endif %}
 {% endblock %}

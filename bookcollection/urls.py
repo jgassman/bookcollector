@@ -19,4 +19,6 @@ urlpatterns = [
     url(r'^series/(?P<series_id>[0-9]+)/$', views.series_detail, name='series_detail'),
     url(r'^series/author/(?P<author_id>[0-9]+)/$', views.author_series, name='author_series'),
     url(r'^series/genre/(?P<genre_id>[0-9]+)/$', views.genre_series, name='genre_series'),
+    url(r'^tags/$', views.tags, name='tags'),
+    url(r'^tags/(?P<tag_id>[0-9]+)/$', views.tag_detail, name='tag_detail'),
 ]

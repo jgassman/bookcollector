@@ -1,0 +1,19 @@
+{% extends 'bookcollection/base.html' %}
+
+{% block content %}
+
+  <div class='page-title'>
+    <h1>{{ tag }}</h1>
+  </div>
+
+  {% if tag_books %}
+    <article class="small-listing">
+      {% for book in tag_books %}
+        <a href="{% url 'bookcollection:book_detail' book.id %}"><img class="book-cover" src={{ book.img_url }} alt={{ book.title }}></a>
+      {% endfor %}
+    </article>
+  {% else %}
+    <p>No books yet!</p>
+  {% endif %}
+
+{% endblock %}

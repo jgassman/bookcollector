@@ -117,6 +117,33 @@ p a {
   padding-top: 43px;
 }
 
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2em;
+  background-color: #0066e2;
+}
+
+.footer a,
+.footer .links {
+  display: inline-block;
+}
+
+.footer a {
+  line-height: 1;
+  padding: 0 15px;
+  color: #e2e2e2;
+  opacity: 0.85;
+}
+
+.footer .links {
+  float: right;
+  padding-right: 30px;
+  padding-top: 3px;
+}
+
 .menu .links a {
     position: relative;
     bottom: 5px;
@@ -127,6 +154,7 @@ p a {
     min-height: 100vh;
     background: #f9f9f9;
     margin: 0 auto;
+    position: relative;
 }
 
 .page-title {
@@ -183,6 +211,18 @@ label {
   border-radius: 5px;
 }
 
+.tag-box {
+  background-color: #444;
+  color: #fff;
+  border-radius: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  float: left;
+  margin-bottom: 20px;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
 input[type=submit]{
   font-family: 'Acme';
 }
@@ -208,8 +248,8 @@ input[type=submit]{
     float: left;
 }
 
-table.fixed {table-layout:fixed; width:900px;}/*Setting the table width is important!*/
-table.fixed td {overflow:hidden; vertical-align: top; }/*Hide text outside the cell.*/
-table.fixed td:nth-of-type(1) {width:300px; vertical-align: top; }/*Setting the width of column 1.*/
-table.fixed td:nth-of-type(2) {width:300px; vertical-align: top; }/*Setting the width of column 2.*/
-table.fixed td:nth-of-type(3) {width:300px; vertical-align: top; }/*Setting the width of column 3.*/
+table .fixed {table-layout:fixed; width:900px;}/*Setting the table width is important!*/
+table .fixed td {overflow:hidden; vertical-align: top; }/*Hide text outside the cell.*/
+table .fixed td:nth-of-type(1) {width:300px; vertical-align: top; }/*Setting the width of column 1.*/
+table .fixed td:nth-of-type(2) {width:300px; vertical-align: top; }/*Setting the width of column 2.*/
+table .fixed td:nth-of-type(3) {width:300px; vertical-align: top; }/*Setting the width of column 3.*/
