@@ -11,7 +11,7 @@
       {% for subgenre in genre.subgenre_set.all %}
         <h2>{{subgenre}}</h2>
         <article class="small-listing">
-          {% for book in subgenre.book_set.all %}
+          {% for book in subgenre.sorted_books %}
             <a href="{% url 'bookcollection:book_detail' book.id %}"><img class="book-cover" src={{ book.img_url }} alt={{ book.title }}></a>
           {% endfor %}
         </article>

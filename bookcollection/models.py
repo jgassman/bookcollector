@@ -17,6 +17,13 @@ class Genre(models.Model):
     def book_count(self):
         return Book.objects.filter(genre=self).count()
 
+    @property
+    def sorted_books(self):
+        books = []
+        for book in sorted(self.book_set.all(), key=lambda b: b.alphabetical_title):
+            books.append(book)
+        return books
+
     def __str__(self):
         return self.name
 
@@ -27,6 +34,13 @@ class Genre(models.Model):
 class Subgenre(models.Model):
     name = models.CharField(max_length=25)
     genre = models.ForeignKey(Genre)
+
+    @property
+    def sorted_books(self):
+        books = []
+        for book in sorted(self.book_set.all(), key=lambda b: b.alphabetical_title):
+            books.append(book)
+        return books
 
     def __str__(self):
         return self.name
@@ -49,6 +63,13 @@ class Author(models.Model):
     @property
     def book_count(self):
         return Book.objects.filter(authors=self).count()
+
+    @property
+    def sorted_books(self):
+        books = []
+        for book in sorted(self.book_set.all(), key=lambda b: b.alphabetical_title):
+            books.append(book)
+        return books
 
     @property
     def genres(self):
@@ -137,6 +158,19 @@ class Book(models.Model):
     audiobook = models.BooleanField()
     img_url = models.URLField(blank=True, null=True)
     tags = models.ManyToManyField(Tag, blank=True)
+
+    @property
+    def alphabetical_title(self):
+        title = self.title
+
+        starts_with_flags = ['the ', 'an ', 'a ']
+
+        for flag in starts_with_flags:
+            if title.lower().startswith(flag):
+                return ("%s, %s" % (title[len(flag):], title[:len(flag)-1])).lower()
+            else:
+                pass
+        return self.title.lower()
 
     def __str__(self):
         return self.title
