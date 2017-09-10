@@ -64,9 +64,9 @@ def books(request):
         form = SearchForm(request.POST)
         if form.is_valid():
             search_text = form.cleaned_data['search_text']
-            books = Book.objects.filter(title__icontains=search_text)
+            books = sorted(Book.objects.filter(title__icontains=search_text), key=lambda b: b.alphabetical_title)
     else:
-        books = Book.objects.order_by('title')
+        books = sorted(Book.objects.all(), key=lambda b: b.alphabetical_title)
     paginator = Paginator(books, 25)
     page = request.GET.get('page')
     search_form = SearchForm()
@@ -82,7 +82,7 @@ def books(request):
 @login_required
 def author_books(request, author_id):
     author = get_object_or_404(Author, pk=author_id)
-    books = Book.objects.filter(authors=author).order_by('title')
+    books = author.sorted_books,
     paginator = Paginator(books, 25)
     page = request.GET.get('page')
     search_form = SearchForm()
@@ -98,7 +98,7 @@ def author_books(request, author_id):
 @login_required
 def genre_books(request, genre_id):
     genre = get_object_or_404(Genre, pk=genre_id)
-    books = Book.objects.filter(genre=genre).order_by('title')
+    books = genre.sorted_books,
     paginator = Paginator(books, 25)
     page = request.GET.get('page')
     search_form = SearchForm()
@@ -188,7 +188,7 @@ def author_detail(request, author_id):
     author = get_object_or_404(Author, pk=author_id)
     context = {
         'author': author,
-        'author_books': author.book_set.all().order_by('title'),
+        'author_books': author.sorted_books,
         'genreData': json.dumps({g.name: Book.objects.filter(genre=g).count() for g in author.genres}),
         'ageData': json.dumps({age[0]: Book.objects.filter(authors=author, age_group=age[0]).count() for age in AGE_GROUP_CHOICES})
     }
@@ -201,7 +201,7 @@ def genre_detail(request, genre_id):
     context = {
         'genre': genre,
         'book_count': Book.objects.filter(genre=genre).count(),
-        'books': genre.book_set.all().order_by('title'),
+        'books': genre.sorted_books,
         'authors': [a for a in Author.objects.all() if genre in a.genres],
         'author_count': sum([1 for a in Author.objects.all() if genre in a.genres]),
         'series': [s for s in Series.objects.all() if s.genre == genre],
@@ -214,7 +214,8 @@ def genre_detail(request, genre_id):
             context['show_subs'] = True
         elif 'age_groups' in request.POST:
             context['show_ages'] = True
-            context['age_data'] = [(age[0], Book.objects.filter(genre=genre, age_group=age[0])) for age in AGE_GROUP_CHOICES]
+            context['age_data'] = [(age[0], sorted(Book.objects.filter(genre=genre, age_group=age[0]),
+                                    key=lambda b: b.alphabetical_title)) for age in AGE_GROUP_CHOICES]
     return render(request, 'bookcollection/genre_detail.html', context=context)
 
 
@@ -234,5 +235,5 @@ def tags(request):
 @login_required
 def tag_detail(request, tag_id):
     tag = get_object_or_404(Tag, pk=tag_id)
-    tag_books = tag.book_set.all()
+    tag_books = sorted(tag.book_set.all(), key=lambda b: b.alphabetical_title)
     return render(request, 'bookcollection/tag_detail.html', {'tag': tag, 'tag_books': tag_books})
