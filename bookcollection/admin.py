@@ -7,6 +7,9 @@ from .models import Author, Book, Series, Genre, Subgenre, Tag
 class BookAdmin(admin.ModelAdmin):
     form = BookForm
 
+    list_filter = ('series',)
+    search_fields = ('title',)
+
 
 admin.site.register(Author)
 admin.site.register(Book, BookAdmin)
