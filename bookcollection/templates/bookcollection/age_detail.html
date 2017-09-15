@@ -3,17 +3,61 @@
 {% block content %}
 
   <div class='page-title'>
-    <h1>{{ age }}</h1>
+    <h1>{{ age.1 }}</h1>
   </div>
 
   {% if age_books %}
-    <article class="small-listing">
-      {% for book in age_books %}
-        <a href="{% url 'bookcollection:book_detail' book.id %}"><img class="book-cover" src={{ book.img_url }} alt={{ book.title }}></a>
+    {% if show_genres %}
+      {% for genre, books in genres.items %}
+        <h2>{{genre}}</h2>
+        <article class="small-listing">
+          {% for book in books %}
+            <a href="{% url 'bookcollection:book_detail' book.id %}"><img class="book-cover" src={{ book.img_url }} alt={{ book.title }}></a>
+          {% endfor %}
+        </article>
       {% endfor %}
-    </article>
+      <br>
+      <form method="post">
+        {% csrf_token %}
+        <input class="button" type="submit" value="Hide Genres" />
+      </form>
+    {% else %}
+      <article class="small-listing">
+        {% for book in age_books %}
+          <a href="{% url 'bookcollection:book_detail' book.id %}"><img class="book-cover" src={{ book.img_url }} alt={{ book.title }}></a>
+        {% endfor %}
+      </article>
+      <form method="post">
+        {% csrf_token %}
+        <input class="button" type="submit" name='genres' value="Shelf by Genre" />
+      </form>
+    {% endif %}
   {% else %}
     <p>No books yet!</p>
   {% endif %}
+
+  <br>
+
+  <div class='stat-grid'>
+    <a class="box" href='{% url 'bookcollection:age_books' age.0 %}'>
+      <h3>Books</h3> <p>{{book_count}}</p>
+    </a>
+    <a class="box" href='{% url 'bookcollection:age_authors' age.0 %}'>
+      <h3>Authors</h3> <p>{{author_count}}</p>
+    </a>
+    <a class="box" href='{% url 'bookcollection:age_series' age.0 %}'>
+      <h3>Series</h3> <p>{{series_count}}</p>
+    </a>
+    <div class="box">
+      <h3>Books by Genre</h3>
+      <canvas id="genreCanvas"></canvas>
+      <div id="genreLegend"></div>
+      <script type="text/javascript" src="/static/bookcollection/piechart.js"></script>
+      <script>
+        var data = {{ genreData|safe }};
+        drawPieChart(data,  "genreCanvas", "genreLegend");
+      </script>
+    </div>
+  </div>
 
 {% endblock %}

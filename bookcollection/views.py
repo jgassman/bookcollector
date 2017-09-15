@@ -1,4 +1,5 @@
 import json
+import bookcollection.utils as utils
 
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
@@ -16,7 +17,7 @@ def index(request):
         'author_count': Author.objects.count(),
         'series_count': Series.objects.count(),
         'genreData': json.dumps({g.name: Book.objects.filter(genre=g).count() for g in Genre.objects.all()}),
-        'ageData': json.dumps({age[0]: Book.objects.filter(age_group=age[0]).count() for age in AGE_GROUP_CHOICES})
+        'ageData': json.dumps({age[1]: Book.objects.filter(age_group=age[0]).count() for age in AGE_GROUP_CHOICES})
     }
     return render(request, 'bookcollection/index.html', context=context)
 
@@ -46,6 +47,22 @@ def authors(request):
 def genre_authors(request, genre_id):
     genre = get_object_or_404(Genre, pk=genre_id)
     authors = [a for a in Author.objects.all() if genre in a.genres]
+    paginator = Paginator(authors, 25)
+    page = request.GET.get('page')
+    search_form = SearchForm()
+    try:
+        all_authors = paginator.page(page)
+    except PageNotAnInteger:
+        all_authors = paginator.page(1)
+    except EmptyPage:
+        all_authors = paginator.page(paginator.num_pages)
+    return render(request, 'bookcollection/authors.html', {'all_authors': all_authors, 'search_form': search_form})
+
+
+@login_required
+def age_authors(request, age_code):
+    age = utils.get_age_group(age_code)
+    authors = utils.get_age_group_authors(age)
     paginator = Paginator(authors, 25)
     page = request.GET.get('page')
     search_form = SearchForm()
@@ -99,6 +116,22 @@ def author_books(request, author_id):
 def genre_books(request, genre_id):
     genre = get_object_or_404(Genre, pk=genre_id)
     books = genre.sorted_books,
+    paginator = Paginator(books, 25)
+    page = request.GET.get('page')
+    search_form = SearchForm()
+    try:
+        all_books = paginator.page(page)
+    except PageNotAnInteger:
+        all_books = paginator.page(1)
+    except EmptyPage:
+        all_books = paginator.page(paginator.num_pages)
+    return render(request, 'bookcollection/books.html', {'all_books': all_books, 'search_form': search_form})
+
+
+@login_required
+def age_books(request, age_code):
+    age = utils.get_age_group(age_code)
+    books = utils.get_age_group_books(age)
     paginator = Paginator(books, 25)
     page = request.GET.get('page')
     search_form = SearchForm()
@@ -178,9 +211,25 @@ def genre_series(request, genre_id):
 
 
 @login_required
+def age_series(request, age_code):
+    age = utils.get_age_group(age_code)
+    series = sorted([book.series for book in utils.get_age_group_books(age) if book.series])
+    paginator = Paginator(series, 25)
+    page = request.GET.get('page')
+    search_form = SearchForm()
+    try:
+        all_series = paginator.page(page)
+    except PageNotAnInteger:
+        all_series = paginator.page(1)
+    except EmptyPage:
+        all_series = paginator.page(paginator.num_pages)
+    return render(request, 'bookcollection/series.html', {'all_series': all_series, 'search_form': search_form})
+
+
+@login_required
 def book_detail(request, book_id):
     book = get_object_or_404(Book, pk=book_id)
-    return render(request, 'bookcollection/book_detail.html', {'book': book})
+    return render(request, 'bookcollection/book_detail.html', {'book': book, 'age_group': utils.get_age_group(book.age_group)[1]})
 
 
 @login_required
@@ -190,7 +239,7 @@ def author_detail(request, author_id):
         'author': author,
         'author_books': author.sorted_books,
         'genreData': json.dumps({g.name: Book.objects.filter(genre=g).count() for g in author.genres}),
-        'ageData': json.dumps({age[0]: Book.objects.filter(authors=author, age_group=age[0]).count() for age in AGE_GROUP_CHOICES})
+        'ageData': json.dumps({age[1]: Book.objects.filter(authors=author, age_group=age[0]).count() for age in AGE_GROUP_CHOICES})
     }
     return render(request, 'bookcollection/author_detail.html', context=context)
 
@@ -207,14 +256,14 @@ def genre_detail(request, genre_id):
         'series': [s for s in Series.objects.all() if s.genre == genre],
         'series_count': sum([1 for s in Series.objects.all() if s.genre == genre]),
         'genreData': json.dumps({g.name: Book.objects.filter(subgenre=g).count() for g in Subgenre.objects.filter(genre=genre)}),
-        'ageData': json.dumps({age[0]: Book.objects.filter(genre=genre, age_group=age[0]).count() for age in AGE_GROUP_CHOICES})
+        'ageData': json.dumps({age[1]: Book.objects.filter(genre=genre, age_group=age[0]).count() for age in AGE_GROUP_CHOICES})
     }
     if request.method == 'POST':
         if 'subgenre' in request.POST:
             context['show_subs'] = True
         elif 'age_groups' in request.POST:
             context['show_ages'] = True
-            context['age_data'] = [(age[0], sorted(Book.objects.filter(genre=genre, age_group=age[0]),
+            context['age_data'] = [(age[1], sorted(Book.objects.filter(genre=genre, age_group=age[0]),
                                     key=lambda b: b.alphabetical_title)) for age in AGE_GROUP_CHOICES]
     return render(request, 'bookcollection/genre_detail.html', context=context)
 
@@ -247,8 +296,19 @@ def ages(request):
 
 @login_required
 def age_detail(request, age_code):
-    age_code = int(age_code)
-    age = [a[1] for a in AGE_GROUP_CHOICES if a[0] == age_code][0]
-    print(age)
-    age_books = sorted(Book.objects.filter(age_group=age), key=lambda b: b.alphabetical_title)
-    return render(request, 'bookcollection/age_detail.html', {'age': age, 'age_books': age_books})
+    age = utils.get_age_group(age_code)
+    age_books = sorted(utils.get_age_group_books(age), key=lambda b: b.alphabetical_title)
+    series_count = len(set([book.series for book in age_books if book.series]))
+    context = {}
+    context['age'] = age
+    context['age_books'] = age_books
+    context['book_count'] = len(utils.get_age_group_books(age))
+    context['author_count'] = len(utils.get_age_group_authors(age))
+    context['series_count'] = series_count
+    context['genreData'] = json.dumps({g.name: Book.objects.filter(genre=g, age_group=age[0]).count()
+                                       for g in Genre.objects.all()})
+    context['genres'] = utils.get_age_group_books_by_genre(age)
+    if request.method == 'POST':
+        if 'genres' in request.POST:
+            context['show_genres'] = True
+    return render(request, 'bookcollection/age_detail.html', context=context)
