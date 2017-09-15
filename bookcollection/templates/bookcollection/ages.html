@@ -1,0 +1,19 @@
+{% extends 'bookcollection/base.html' %}
+
+{% block content %}
+
+  <div class='page-title'>
+    <h1> Age Groups </h1>
+  </div>
+
+  <br>
+
+  <div class='tag-grid'>
+    {% for age in ages %}
+    <a class="tag-box" href='{% url 'bookcollection:age_detail' age.0 %}'>
+      <h3>{{ age.1 }}</h3>
+    </a>
+    {% endfor %}
+  </div>
+
+{% endblock %}

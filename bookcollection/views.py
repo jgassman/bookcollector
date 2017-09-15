@@ -237,3 +237,18 @@ def tag_detail(request, tag_id):
     tag = get_object_or_404(Tag, pk=tag_id)
     tag_books = sorted(tag.book_set.all(), key=lambda b: b.alphabetical_title)
     return render(request, 'bookcollection/tag_detail.html', {'tag': tag, 'tag_books': tag_books})
+
+
+@login_required
+def ages(request):
+    ages = AGE_GROUP_CHOICES
+    return render(request, 'bookcollection/ages.html', {'ages': ages})
+
+
+@login_required
+def age_detail(request, age_code):
+    age_code = int(age_code)
+    age = [a[1] for a in AGE_GROUP_CHOICES if a[0] == age_code][0]
+    print(age)
+    age_books = sorted(Book.objects.filter(age_group=age), key=lambda b: b.alphabetical_title)
+    return render(request, 'bookcollection/age_detail.html', {'age': age, 'age_books': age_books})

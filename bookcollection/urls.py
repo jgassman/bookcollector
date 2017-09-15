@@ -21,4 +21,6 @@ urlpatterns = [
     url(r'^series/genre/(?P<genre_id>[0-9]+)/$', views.genre_series, name='genre_series'),
     url(r'^tags/$', views.tags, name='tags'),
     url(r'^tags/(?P<tag_id>[0-9]+)/$', views.tag_detail, name='tag_detail'),
+    url(r'^by_age/$', views.ages, name='ages'),
+    url(r'^by_age/(?P<age_code>[0-9]+)/$', views.age_detail, name='age_detail'),
 ]

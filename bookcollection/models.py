@@ -3,10 +3,10 @@ from django.db import models
 from smart_selects.db_fields import ChainedForeignKey
 
 AGE_GROUP_CHOICES = (
-    ('Children', 'Children'),
-    ('Middle Grade', 'Middle Grade'),
-    ('Young Adult', 'Young Adult'),
-    ('Adult', 'Adult')
+    (1, 'Children'),
+    (2, 'Middle Grade'),
+    (3, 'Young Adult'),
+    (4, 'Adult')
 )
 
 
