@@ -86,6 +86,16 @@
         drawPieChart(data,  "ageCanvas", "ageLegend");
       </script>
     </div>
+    <div class="box">
+      <h3>Books by Read Status</h3>
+      <canvas id="readCanvas"></canvas>
+      <div id="readLegend"></div>
+      <script type="text/javascript" src="/static/bookcollection/piechart.js"></script>
+      <script>
+        var data = {{ readData|safe }};
+        drawPieChart(data,  "readCanvas", "readLegend");
+      </script>
+    </div>
   </div>
 
 {% endblock %}

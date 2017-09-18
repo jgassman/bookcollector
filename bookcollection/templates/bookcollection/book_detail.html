@@ -19,6 +19,12 @@
       <p><span>[audiobook]</span></p>
     {% endif %}
   </div>
+  <form method="post">
+    {% csrf_token %}
+    {% if book.read is False %}
+      <input class="button" type="submit" name="read" value="Read">
+    {% endif %}
+  </form>
 
   {% for author in book.authors.all %}
     <p>See more books by <a href="{% url 'bookcollection:author_detail' author.id %}">{{ author }}</a></p>

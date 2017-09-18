@@ -17,7 +17,11 @@ def index(request):
         'author_count': Author.objects.count(),
         'series_count': Series.objects.count(),
         'genreData': json.dumps({g.name: Book.objects.filter(genre=g).count() for g in Genre.objects.all()}),
-        'ageData': json.dumps({age[1]: Book.objects.filter(age_group=age[0]).count() for age in AGE_GROUP_CHOICES})
+        'ageData': json.dumps({age[1]: Book.objects.filter(age_group=age[0]).count() for age in AGE_GROUP_CHOICES}),
+        'readData': json.dumps({
+            'Read': Book.objects.filter(read=True).count(),
+            'Unread': Book.objects.filter(read=False).count()
+            })
     }
     return render(request, 'bookcollection/index.html', context=context)
 
@@ -228,6 +232,9 @@ def age_series(request, age_code):
 
 @login_required
 def book_detail(request, book_id):
+    if request.method == 'POST':
+        if 'read' in request.POST:
+            Book.objects.filter(pk=book_id).update(read=True)
     book = get_object_or_404(Book, pk=book_id)
     return render(request, 'bookcollection/book_detail.html', {'book': book, 'age_group': utils.get_age_group(book.age_group)[1]})
 
@@ -239,7 +246,11 @@ def author_detail(request, author_id):
         'author': author,
         'author_books': author.sorted_books,
         'genreData': json.dumps({g.name: Book.objects.filter(genre=g).count() for g in author.genres}),
-        'ageData': json.dumps({age[1]: Book.objects.filter(authors=author, age_group=age[0]).count() for age in AGE_GROUP_CHOICES})
+        'ageData': json.dumps({age[1]: Book.objects.filter(authors=author, age_group=age[0]).count() for age in AGE_GROUP_CHOICES}),
+        'readData': json.dumps({
+            'Read': Book.objects.filter(authors=author, read=True).count(),
+            'Unread': Book.objects.filter(authors=author, read=False).count()
+            })
     }
     return render(request, 'bookcollection/author_detail.html', context=context)
 
@@ -256,7 +267,11 @@ def genre_detail(request, genre_id):
         'series': [s for s in Series.objects.all() if s.genre == genre],
         'series_count': sum([1 for s in Series.objects.all() if s.genre == genre]),
         'genreData': json.dumps({g.name: Book.objects.filter(subgenre=g).count() for g in Subgenre.objects.filter(genre=genre)}),
-        'ageData': json.dumps({age[1]: Book.objects.filter(genre=genre, age_group=age[0]).count() for age in AGE_GROUP_CHOICES})
+        'ageData': json.dumps({age[1]: Book.objects.filter(genre=genre, age_group=age[0]).count() for age in AGE_GROUP_CHOICES}),
+        'readData': json.dumps({
+            'Read': Book.objects.filter(genre=genre, read=True).count(),
+            'Unread': Book.objects.filter(genre=genre, read=False).count()
+            })
     }
     if request.method == 'POST':
         if 'subgenre' in request.POST:
@@ -308,6 +323,8 @@ def age_detail(request, age_code):
     context['genreData'] = json.dumps({g.name: Book.objects.filter(genre=g, age_group=age[0]).count()
                                        for g in Genre.objects.all()})
     context['genres'] = utils.get_age_group_books_by_genre(age)
+    context['readData'] = json.dumps({'Read': Book.objects.filter(age_group=age[0], read=True).count(),
+                                      'Unread': Book.objects.filter(age_group=age[0], read=False).count()})
     if request.method == 'POST':
         if 'genres' in request.POST:
             context['show_genres'] = True

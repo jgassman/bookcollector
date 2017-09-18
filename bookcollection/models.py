@@ -159,6 +159,7 @@ class Book(models.Model):
         sort=True)
     age_group = models.CharField(max_length=15, choices=AGE_GROUP_CHOICES, default='Children')
     audiobook = models.BooleanField()
+    read = models.BooleanField()
     img_url = models.URLField(blank=True, null=True)
     tags = models.ManyToManyField(Tag, blank=True)
 

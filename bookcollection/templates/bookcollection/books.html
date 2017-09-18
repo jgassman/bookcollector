@@ -37,6 +37,9 @@
       {% if book.audiobook %}
         <p><span>[audiobook]</span></p>
       {% endif %}
+      {% if book.read %}
+        <p><span>[read]</span></p>
+      {% endif %}
     </article>
     {% endfor %}
     </ul>
