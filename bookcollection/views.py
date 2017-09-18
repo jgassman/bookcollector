@@ -236,7 +236,7 @@ def book_detail(request, book_id):
         if 'read' in request.POST:
             Book.objects.filter(pk=book_id).update(read=True)
     book = get_object_or_404(Book, pk=book_id)
-    return render(request, 'bookcollection/book_detail.html', {'book': book, 'age_group': utils.get_age_group(book.age_group)[1]})
+    return render(request, 'bookcollection/book_detail.html', {'book': book})
 
 
 @login_required
