@@ -164,6 +164,10 @@ class Book(models.Model):
     tags = models.ManyToManyField(Tag, blank=True)
 
     @property
+    def age(self):
+        return [a for a in AGE_GROUP_CHOICES if a[0] == self.age_group][0][1]
+
+    @property
     def alphabetical_title(self):
         title = self.title
 

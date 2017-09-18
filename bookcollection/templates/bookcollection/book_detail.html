@@ -11,7 +11,7 @@
     <p><span>Author:</span> {{book.authors.all|join:", " }}</p>
     <p><span>Year:</span> {{book.year_published}}</p>
     <p><span>Genre:</span> {{book.genre}} > {{book.subgenre}}</p>
-    <p><span>Age:</span> {{age_group}}</p>
+    <p><span>Age:</span> {{book.age}}</p>
     {% if book.series %}
       <p><span>Series:</span> {{ book.series }} (Book {{book.series_number}})</p>
     {% endif %}
