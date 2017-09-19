@@ -35,7 +35,7 @@ def authors(request):
             authors = Author.objects.filter(Q(first_name__icontains=search_text) | Q(last_name__icontains=search_text))
     else:
         authors = Author.objects.order_by('last_name')
-    paginator = Paginator(authors, 25)
+    paginator = Paginator(authors, 50)
     page = request.GET.get('page')
     search_form = SearchForm()
     try:
@@ -51,7 +51,7 @@ def authors(request):
 def genre_authors(request, genre_id):
     genre = get_object_or_404(Genre, pk=genre_id)
     authors = [a for a in Author.objects.all() if genre in a.genres]
-    paginator = Paginator(authors, 25)
+    paginator = Paginator(authors, 50)
     page = request.GET.get('page')
     search_form = SearchForm()
     try:
@@ -67,7 +67,7 @@ def genre_authors(request, genre_id):
 def age_authors(request, age_code):
     age = utils.get_age_group(age_code)
     authors = utils.get_age_group_authors(age)
-    paginator = Paginator(authors, 25)
+    paginator = Paginator(authors, 50)
     page = request.GET.get('page')
     search_form = SearchForm()
     try:
@@ -88,7 +88,7 @@ def books(request):
             books = sorted(Book.objects.filter(title__icontains=search_text), key=lambda b: b.alphabetical_title)
     else:
         books = sorted(Book.objects.all(), key=lambda b: b.alphabetical_title)
-    paginator = Paginator(books, 25)
+    paginator = Paginator(books, 50)
     page = request.GET.get('page')
     search_form = SearchForm()
     try:
@@ -109,7 +109,7 @@ def unread(request):
             books = sorted(Book.objects.filter(title__icontains=search_text), key=lambda b: b.alphabetical_title)
     else:
         books = sorted(Book.objects.filter(read=False), key=lambda b: b.alphabetical_title)
-    paginator = Paginator(books, 25)
+    paginator = Paginator(books, 50)
     page = request.GET.get('page')
     search_form = SearchForm()
     try:
@@ -125,7 +125,7 @@ def unread(request):
 def author_books(request, author_id):
     author = get_object_or_404(Author, pk=author_id)
     books = author.sorted_books,
-    paginator = Paginator(books, 25)
+    paginator = Paginator(books, 50)
     page = request.GET.get('page')
     search_form = SearchForm()
     try:
@@ -141,7 +141,7 @@ def author_books(request, author_id):
 def genre_books(request, genre_id):
     genre = get_object_or_404(Genre, pk=genre_id)
     books = genre.sorted_books,
-    paginator = Paginator(books, 25)
+    paginator = Paginator(books, 50)
     page = request.GET.get('page')
     search_form = SearchForm()
     try:
@@ -157,7 +157,7 @@ def genre_books(request, genre_id):
 def age_books(request, age_code):
     age = utils.get_age_group(age_code)
     books = utils.get_age_group_books(age)
-    paginator = Paginator(books, 25)
+    paginator = Paginator(books, 50)
     page = request.GET.get('page')
     search_form = SearchForm()
     try:
@@ -191,7 +191,7 @@ def series(request):
             series = Series.objects.filter(name__icontains=search_text)
     else:
         series = Series.objects.order_by('name')
-    paginator = Paginator(series, 25)
+    paginator = Paginator(series, 50)
     page = request.GET.get('page')
     search_form = SearchForm()
     try:
@@ -207,7 +207,7 @@ def series(request):
 def author_series(request, author_id):
     author = get_object_or_404(Author, pk=author_id)
     series = [s for s in Series.objects.all() if author in s.authors]
-    paginator = Paginator(series, 25)
+    paginator = Paginator(series, 50)
     page = request.GET.get('page')
     search_form = SearchForm()
     try:
@@ -223,7 +223,7 @@ def author_series(request, author_id):
 def genre_series(request, genre_id):
     genre = get_object_or_404(Genre, pk=genre_id)
     series = [s for s in Series.objects.all() if s.genre == genre]
-    paginator = Paginator(series, 25)
+    paginator = Paginator(series, 50)
     page = request.GET.get('page')
     search_form = SearchForm()
     try:
@@ -239,7 +239,7 @@ def genre_series(request, genre_id):
 def age_series(request, age_code):
     age = utils.get_age_group(age_code)
     series = sorted([book.series for book in utils.get_age_group_books(age) if book.series])
-    paginator = Paginator(series, 25)
+    paginator = Paginator(series, 50)
     page = request.GET.get('page')
     search_form = SearchForm()
     try:
