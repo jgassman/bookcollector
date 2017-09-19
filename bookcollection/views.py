@@ -101,6 +101,27 @@ def books(request):
 
 
 @login_required
+def unread(request):
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            search_text = form.cleaned_data['search_text']
+            books = sorted(Book.objects.filter(title__icontains=search_text), key=lambda b: b.alphabetical_title)
+    else:
+        books = sorted(Book.objects.filter(read=False), key=lambda b: b.alphabetical_title)
+    paginator = Paginator(books, 25)
+    page = request.GET.get('page')
+    search_form = SearchForm()
+    try:
+        all_books = paginator.page(page)
+    except PageNotAnInteger:
+        all_books = paginator.page(1)
+    except EmptyPage:
+        all_books = paginator.page(paginator.num_pages)
+    return render(request, 'bookcollection/books.html', {'all_books': all_books, 'search_form': search_form})
+
+
+@login_required
 def author_books(request, author_id):
     author = get_object_or_404(Author, pk=author_id)
     books = author.sorted_books,
