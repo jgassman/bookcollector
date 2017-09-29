@@ -128,6 +128,6 @@ ALLOWED_HOSTS = ['*']
 DEBUG = False
 
 try:
-    from local_settings import *
+    from bookcollector.local_settings import *
 except ImportError:
     pass

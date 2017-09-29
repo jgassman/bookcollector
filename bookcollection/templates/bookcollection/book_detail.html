@@ -7,7 +7,9 @@
   </div>
 
   <div class="book-content">
-    <img class="book-cover" src={{ book.img_url }} alt={{ book.title }}>
+    <div class="cover-space">
+      <img class="book-cover" src={{ book.img_url }} alt={{ book.title }}>
+    </div>
     <p><span>Author:</span> {{book.authors.all|join:", " }}</p>
     <p><span>Year:</span> {{book.year_published}}</p>
     <p><span>Genre:</span> {{book.genre}} > {{book.subgenre}}</p>
