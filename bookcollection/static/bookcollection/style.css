@@ -47,15 +47,22 @@ p a {
 }
 
 .listing img {
-    height: 150px;
+    height: auto;
     width: 105px;
     float: left;
     margin-right: 45px;
     border-radius: 5px;
 }
 
+.listing .cover-space {
+    height: 145px;
+    width: 105px;
+    float: left;
+    margin-right: 45px;
+}
+
 .small-listing img {
-    height: 150px;
+    height: auto;
     width: 105px;
     float: left;
     margin-bottom: 20px;
@@ -233,8 +240,15 @@ input[type=submit]{
 }
 
 .book-cover {
-  height: 200px;
+  height: auto;
   width: 125px;
+}
+
+.book-content .cover-space {
+    height:200px;
+    width:140px;
+    float: left;
+    margin-right: 15px;
 }
 
 .book-content {
