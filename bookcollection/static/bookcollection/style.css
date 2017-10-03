@@ -62,7 +62,7 @@ p a {
 }
 
 .small-listing img {
-    height: auto;
+    height: 150px;
     width: 105px;
     float: left;
     margin-bottom: 20px;
