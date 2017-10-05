@@ -80,13 +80,18 @@ def age_authors(request, age_code):
 
 
 @login_required
-def books(request):
+def books(request, *args, **kwargs):
     if request.method == 'POST':
         form = SearchForm(request.POST)
         if form.is_valid():
-            search_text = form.cleaned_data['search_text']
-            books = sorted(Book.objects.filter(title__icontains=search_text), key=lambda b: b.alphabetical_title)
+            kwargs['title__icontains'] = form.cleaned_data['search_text']
+            if 'read' in request.session:
+                print('Found read')
+                kwargs['read'] = False
+            books = sorted(Book.objects.filter(**kwargs), key=lambda b: b.alphabetical_title)
     else:
+        if 'read' in request.session:
+            del request.session['read']
         books = sorted(Book.objects.all(), key=lambda b: b.alphabetical_title)
     paginator = Paginator(books, 50)
     page = request.GET.get('page')
@@ -101,14 +106,9 @@ def books(request):
 
 
 @login_required
-def unread(request):
-    if request.method == 'POST':
-        form = SearchForm(request.POST)
-        if form.is_valid():
-            search_text = form.cleaned_data['search_text']
-            books = sorted(Book.objects.filter(title__icontains=search_text), key=lambda b: b.alphabetical_title)
-    else:
-        books = sorted(Book.objects.filter(read=False), key=lambda b: b.alphabetical_title)
+def unread(request, *args, **kwargs):
+    request.session['read'] = False
+    books = Book.objects.filter(read=False)
     paginator = Paginator(books, 50)
     page = request.GET.get('page')
     search_form = SearchForm()
