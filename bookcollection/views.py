@@ -269,10 +269,11 @@ def author_detail(request, author_id):
 @login_required
 def genre_detail(request, genre_id):
     genre = get_object_or_404(Genre, pk=genre_id)
+    books = genre.sorted_books
     context = {
         'genre': genre,
-        'book_count': Book.objects.filter(genre=genre).count(),
-        'books': genre.sorted_books,
+        'book_count': len(books),
+        'books': books,
         'authors': [a for a in Author.objects.all() if genre in a.genres],
         'author_count': sum([1 for a in Author.objects.all() if genre in a.genres]),
         'series': [s for s in Series.objects.all() if s.genre == genre],
@@ -323,12 +324,12 @@ def ages(request):
 @login_required
 def age_detail(request, age_code):
     age = utils.get_age_group(age_code)
-    age_books = sorted(utils.get_age_group_books(age), key=lambda b: b.alphabetical_title)
+    age_books = sorted(Book.objects.filter(age_group=age_code), key=lambda b: b.alphabetical_title)
     series_count = len(set([book.series for book in age_books if book.series]))
     context = {}
     context['age'] = age
     context['age_books'] = age_books
-    context['book_count'] = len(utils.get_age_group_books(age))
+    context['book_count'] = len(age_books)
     context['author_count'] = len(utils.get_age_group_authors(age))
     context['series_count'] = series_count
     context['genreData'] = json.dumps({g.name: Book.objects.filter(genre=g, age_group=age[0]).count()
