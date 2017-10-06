@@ -5,9 +5,9 @@
     {% csrf_token %}
     <br>
     {% if age_code %}
-      <form method="POST" action="{% url 'bookcollection:age_books' age_code %}">
+      <form method="POST" action="{% url 'bookcollection:unread_by_age' age_code %}">
     {% else %}
-      <form method="POST" action="{% url 'bookcollection:books' %}">
+      <form method="POST" action="{% url 'bookcollection:unread' %}">
     {% endif %}
       {% csrf_token %}
       {{search_form}}
@@ -15,7 +15,7 @@
     </form>
     <div class='tag-grid' style="margin-bottom:50px;margin-left:50px;">
       {% for age in ages %}
-      <a class="tag-box" href='{% url 'bookcollection:age_books' age.0 %}'>
+      <a class="tag-box" href='{% url 'bookcollection:unread_by_age' age.0 %}'>
         <h3>{{ age.1 }}</h3>
       </a>
       {% endfor %}
