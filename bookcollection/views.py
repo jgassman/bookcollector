@@ -130,7 +130,7 @@ def unread(request, age_code=None, *args, **kwargs):
 @login_required
 def author_books(request, author_id):
     author = get_object_or_404(Author, pk=author_id)
-    books = author.sorted_books,
+    books = author.sorted_books
     paginator = Paginator(books, 50)
     page = request.GET.get('page')
     search_form = SearchForm()
@@ -146,7 +146,7 @@ def author_books(request, author_id):
 @login_required
 def genre_books(request, genre_id):
     genre = get_object_or_404(Genre, pk=genre_id)
-    books = genre.sorted_books,
+    books = genre.sorted_books
     paginator = Paginator(books, 50)
     page = request.GET.get('page')
     search_form = SearchForm()

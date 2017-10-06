@@ -13,21 +13,22 @@
       {{search_form}}
       <input type="submit" name="search" value="Search">
     </form>
-    <div class='tag-grid' style="margin-bottom:50px;margin-left:50px;">
-      {% for age in ages %}
-      <a class="tag-box" href='{% url 'bookcollection:age_books' age.0 %}'>
-        <h3>{{ age.1 }}</h3>
-      </a>
-      {% endfor %}
-    </div>
-    <br>
+    {% if ages %}
+      <div class='tag-grid' style="margin-bottom:50px;margin-left:50px;">
+        {% for age in ages %}
+        <a class="tag-box" href='{% url 'bookcollection:age_books' age.0 %}'>
+          <h3>{{ age.1 }}</h3>
+        </a>
+        {% endfor %}
+      </div>
+      <br>
+    {% endif %}
     <ul>
     {% for book in all_books %}
     <article class="listing">
       <div class="cover-space">
         <img class="book-cover" src={{ book.img_url }} alt={{ book.title }}>
       </div>
-      <h3><a href="{% url 'bookcollection:book_detail' book.id %}">{{ book.title }}</a></h3>
       <div class="detail author">
         <span>Author:</span> {{book.authors.all|join:", " }}
       </div>
