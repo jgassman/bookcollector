@@ -80,19 +80,16 @@ def age_authors(request, age_code):
 
 
 @login_required
-def books(request, *args, **kwargs):
+def books(request, age_code=None, *args, **kwargs):
+    books = Book.objects.all()
+    if age_code:
+        books = books.filter(age_group=age_code)
     if request.method == 'POST':
         form = SearchForm(request.POST)
         if form.is_valid():
-            kwargs['title__icontains'] = form.cleaned_data['search_text']
-            if 'read' in request.session:
-                print('Found read')
-                kwargs['read'] = False
-            books = sorted(Book.objects.filter(**kwargs), key=lambda b: b.alphabetical_title)
-    else:
-        if 'read' in request.session:
-            del request.session['read']
-        books = sorted(Book.objects.all(), key=lambda b: b.alphabetical_title)
+            search_text = form.cleaned_data['search_text']
+            books = books.filter(title__icontains=search_text)
+    books = sorted(books, key=lambda b: b.alphabetical_title)
     paginator = Paginator(books, 50)
     page = request.GET.get('page')
     search_form = SearchForm()
@@ -102,13 +99,21 @@ def books(request, *args, **kwargs):
         all_books = paginator.page(1)
     except EmptyPage:
         all_books = paginator.page(paginator.num_pages)
-    return render(request, 'bookcollection/books.html', {'all_books': all_books, 'search_form': search_form})
+    return render(request, 'bookcollection/books.html', {'all_books': all_books, 'ages': AGE_GROUP_CHOICES,
+        'age_code': age_code, 'search_form': search_form})
 
 
 @login_required
-def unread(request, *args, **kwargs):
-    request.session['read'] = False
+def unread(request, age_code=None, *args, **kwargs):
     books = Book.objects.filter(read=False)
+    if age_code:
+        books = books.filter(age_group=age_code)
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            search_text = form.cleaned_data['search_text']
+            books = sorted(books.filter(title__icontains=search_text), key=lambda b: b.alphabetical_title)
+    books = sorted(books, key=lambda b: b.alphabetical_title)
     paginator = Paginator(books, 50)
     page = request.GET.get('page')
     search_form = SearchForm()
@@ -118,7 +123,8 @@ def unread(request, *args, **kwargs):
         all_books = paginator.page(1)
     except EmptyPage:
         all_books = paginator.page(paginator.num_pages)
-    return render(request, 'bookcollection/books.html', {'all_books': all_books, 'search_form': search_form})
+    return render(request, 'bookcollection/unread.html', {'all_books': all_books,
+        'ages': AGE_GROUP_CHOICES, 'age_code': age_code, 'search_form': search_form})
 
 
 @login_required
@@ -141,22 +147,6 @@ def author_books(request, author_id):
 def genre_books(request, genre_id):
     genre = get_object_or_404(Genre, pk=genre_id)
     books = genre.sorted_books,
-    paginator = Paginator(books, 50)
-    page = request.GET.get('page')
-    search_form = SearchForm()
-    try:
-        all_books = paginator.page(page)
-    except PageNotAnInteger:
-        all_books = paginator.page(1)
-    except EmptyPage:
-        all_books = paginator.page(paginator.num_pages)
-    return render(request, 'bookcollection/books.html', {'all_books': all_books, 'search_form': search_form})
-
-
-@login_required
-def age_books(request, age_code):
-    age = utils.get_age_group(age_code)
-    books = utils.get_age_group_books(age)
     paginator = Paginator(books, 50)
     page = request.GET.get('page')
     search_form = SearchForm()
