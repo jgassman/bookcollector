@@ -1,0 +1,269 @@
+@import url('https://fonts.googleapis.com/css?family=Acme');
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+div,
+span,
+a { font-family: 'Acme'; line-height: 1.5; text-decoration: none; }
+
+ul li a {
+  color: #000000;
+}
+
+ol li a {
+  color: #000000;
+}
+
+p a {
+  color: #b77c3a;
+}
+
+.listing {
+    margin-top: 15px;
+    background-color: #f6f6f6;
+    padding: 15px 50px;
+    min-height: 145px;
+    position: relative;
+}
+
+.small-listing {
+    margin-top: 15px;
+    background-color: #f6f6f6;
+    padding: 15px 50px;
+    min-height: 145px;
+    height: auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.listing:hover {
+    background-color: #f3f3f3;
+}
+
+.listing img {
+    height: auto;
+    width: 105px;
+    float: left;
+    margin-right: 45px;
+    border-radius: 5px;
+}
+
+.listing .cover-space {
+    height: 145px;
+    width: 105px;
+    float: left;
+    margin-right: 45px;
+}
+
+.small-listing img {
+    height: 150px;
+    width: 105px;
+    float: left;
+    margin-bottom: 20px;
+    margin-right: 20px;
+    border-radius: 5px;
+}
+
+.listing h3 {
+    padding: 0 15px 0 0;
+}
+
+.listing h3 a {
+    display: inline;
+    color: #000000;
+}
+
+.listing .detail {
+    width: 36%;
+    display: inline-block;
+    padding: 0px 15px 0 0;
+    margin: 0;
+    font-weight: 300;
+}
+
+.listing .detail span {
+    font-weight: 400;
+    font-style: normal;
+}
+
+.menu {
+    height: 4em;
+    background-color: #ffdb00;
+}
+
+.menu h1 {
+    padding: 7px 0 0 20px;
+    color: #60605c;
+    font-size: 2.1em;
+    position: relative;
+    left: -12px;
+    bottom: 15px;
+}
+
+.menu a,
+.menu .links {
+    display: inline-block;
+}
+
+.menu a {
+    line-height: 1;
+    padding: 0 15px;
+    color: #60605c;
+    opacity: 0.85;
+}
+
+.menu .links {
+  float: right;
+  padding-right: 30px;
+  padding-top: 43px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2em;
+  background-color: #ffdb00;
+}
+
+.footer a,
+.footer .links {
+  display: inline-block;
+}
+
+.footer a {
+  line-height: 1;
+  padding: 0 15px;
+  color: #60605c;
+  opacity: 0.85;
+}
+
+.footer .links {
+  float: right;
+  padding-right: 30px;
+  padding-top: 3px;
+}
+
+.menu .links a {
+    position: relative;
+    bottom: 5px;
+}
+
+.container {
+    max-width: 1024px;
+    min-height: 100vh;
+    background: #f9f9f9;
+    margin: 0 auto;
+    position: relative;
+}
+
+.page-title {
+  padding-left: 10px;
+}
+
+.button {
+  padding: 12px 30px 13px;
+  color: #fff4b1;
+  background: #000000;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+  opacity: 0.9;
+  position: relative;
+}
+
+.button:hover {
+    opacity: 1;
+}
+
+.body {
+    padding: 15px;
+}
+
+label {
+  float: left;
+  clear: left;
+  width: 100px;
+  text-align: right;
+  margin-right: 20px;
+}
+
+.stat-grid {
+    margin-top: 15px;
+    min-height: 145px;
+    height: auto;
+    position: relative;
+    overflow: hidden;
+    padding-top: 10px;
+}
+
+.box {
+  background-color: #444;
+  color: #fff;
+  border-radius: 5px;
+  padding-left: 20px;
+  padding-bottom: 20px;
+  font-size: 150%;
+  width: 300px;
+  float: left;
+  margin-bottom: 20px;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+.tag-box {
+  background-color: #444;
+  color: #fff;
+  border-radius: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  float: left;
+  margin-bottom: 20px;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+input[type=submit]{
+  font-family: 'Acme';
+}
+
+.pagination {
+  padding-top: 10px;
+  text-align: center;
+}
+
+.book-cover {
+  height: auto;
+  width: 125px;
+}
+
+.book-content .cover-space {
+    height:200px;
+    width:140px;
+    float: left;
+    margin-right: 15px;
+}
+
+.book-content {
+    width: 600px;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.book-content img {
+    margin-right: 15px;
+    float: left;
+}
+
+table .fixed {table-layout:fixed; width:900px;}/*Setting the table width is important!*/
+table .fixed td {overflow:hidden; vertical-align: top; }/*Hide text outside the cell.*/
+table .fixed td:nth-of-type(1) {width:300px; vertical-align: top; }/*Setting the width of column 1.*/
+table .fixed td:nth-of-type(2) {width:300px; vertical-align: top; }/*Setting the width of column 2.*/
+table .fixed td:nth-of-type(3) {width:300px; vertical-align: top; }/*Setting the width of column 3.*/
