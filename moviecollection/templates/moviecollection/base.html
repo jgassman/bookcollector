@@ -1,19 +1,16 @@
 {% load static %}
 
 <head>
-  <link rel="stylesheet" type="text/css" href="/static/bookcollection/style.css">
+  <link rel="stylesheet" type="text/css" href="/static/moviecollection/style.css">
 </head>
 
 <div class="container">
   <div class="menu">
-    <a href="/bookcollection/">
-      <h1> Book Collector </h1>
+    <a href="/moviecollection/">
+      <h1> Movie Collector </h1>
     </a>
     <div class="links">
-      <a href="/bookcollection/authors/"> Authors </a>
-      <a href="/bookcollection/books/"> Books </a>
-      <a href="/bookcollection/genres/"> Genres </a>
-      <a href="/bookcollection/series/"> Series </a>
+      <a href="#"> Movies </a>
       {%if user.is_authenticated %}
         <a href="{% url 'logout' %}"> Log out </a>
       {% endif %}
@@ -27,9 +24,6 @@
   <div class="footer">
     <div class="links">
       <a href="/"> Home </a>
-      <a href="/bookcollection/books/unread"> View Unread </a>
-      <a href="/bookcollection/tags"> View Tags </a>
-      <a href="/bookcollection/by_age"> View Age Groups </a>
     </div>
   </div>
 </div>

@@ -22,6 +22,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'bookcollection.apps.BookcollectionConfig',
     'gamecollection.apps.GamecollectionConfig',
+    'moviecollection',
     'landingpage',
     'django.contrib.admin',
     'django.contrib.auth',

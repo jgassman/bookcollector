@@ -94,12 +94,12 @@ p a {
 
 .menu {
     height: 4em;
-    background-color: #0066e2;
+    background-color: #ffdb00;
 }
 
 .menu h1 {
     padding: 7px 0 0 20px;
-    color: #e2e2e2;
+    color: #60605c;
     font-size: 2.1em;
     position: relative;
     left: -12px;
@@ -114,7 +114,7 @@ p a {
 .menu a {
     line-height: 1;
     padding: 0 15px;
-    color: #e2e2e2;
+    color: #60605c;
     opacity: 0.85;
 }
 
@@ -130,7 +130,7 @@ p a {
   left: 0;
   right: 0;
   height: 2em;
-  background-color: #0066e2;
+  background-color: #ffdb00;
 }
 
 .footer a,
@@ -141,7 +141,7 @@ p a {
 .footer a {
   line-height: 1;
   padding: 0 15px;
-  color: #e2e2e2;
+  color: #60605c;
   opacity: 0.85;
 }
 
@@ -170,8 +170,8 @@ p a {
 
 .button {
   padding: 12px 30px 13px;
-  color: #e2e2e2;
-  background: #001b8a;
+  color: #fff4b1;
+  background: #000000;
   border-radius: 5px;
   border: none;
   font-size: 16px;
