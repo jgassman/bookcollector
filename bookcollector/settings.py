@@ -20,10 +20,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'bookcollection.apps.BookcollectionConfig',
-    'gamecollection.apps.GamecollectionConfig',
-    'moviecollection',
-    'landingpage',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -31,6 +27,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'smart_selects',
+    'bookcollection',
+    'gamecollection',
+    'moviecollection',
+    'landingpage',
 ]
 
 MIDDLEWARE = [
@@ -117,7 +117,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = '/bookcollection/'
+LOGIN_REDIRECT_URL = '/'
 
 import dj_database_url
 DATABASES['default'] = dj_database_url.config()
