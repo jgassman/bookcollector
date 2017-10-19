@@ -26,6 +26,16 @@
     <a class="box" href='{% url 'moviecollection:genre_series' genre.id %}'>
       <h3>Series</h3> <p>{{series_count}}</p>
     </a>
+    <div class="box">
+      <h3>Movies by Subgenre</h3>
+      <canvas id="genreCanvas"></canvas>
+      <div id="genreLegend"></div>
+      <script type="text/javascript" src="/static/moviecollection/piechart.js"></script>
+      <script>
+        var data = {{ genreData|safe }};
+        drawPieChart(data,  "genreCanvas", "genreLegend");
+      </script>
+    </div>
   </div>
 
 {% endblock %}

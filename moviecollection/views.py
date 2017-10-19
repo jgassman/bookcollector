@@ -1,3 +1,4 @@
+import json
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import get_object_or_404, render
@@ -79,6 +80,7 @@ def genre_detail(request, genre_id):
         'movies': movies,
         'series': series,
         'series_count': len(series),
+        'genreData': json.dumps({s.name: Movie.objects.filter(subgenre=s).count() for s in genre.subgenre_set.all()})
     }
     return render(request, 'moviecollection/genre_detail.html', context=context)
 
