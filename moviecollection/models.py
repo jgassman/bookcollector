@@ -63,7 +63,8 @@ class Movie(models.Model):
         chained_model_field="genre",
         show_all=False,
         auto_choose=True,
-        sort=True)
+        sort=True,
+        null=True, blank=True)
     img_url = models.URLField(blank=True, null=True)
 
     def __str__(self):
