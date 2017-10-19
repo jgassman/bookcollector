@@ -4,6 +4,7 @@
   {% if all_movies %}
     {% csrf_token %}
     <br>
+    <form method="POST" action="{% url 'moviecollection:movies' %}">
       {% csrf_token %}
       {{search_form}}
       <input type="submit" name="search" value="Search">
