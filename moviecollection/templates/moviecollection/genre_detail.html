@@ -1,0 +1,31 @@
+{% extends 'moviecollection/base.html' %}
+
+{% block content %}
+
+  <div class='page-title'>
+    <h1>{{ genre }}</h1>
+  </div>
+
+  {% if movies %}
+    <article class="small-listing">
+      {% for movie in movies %}
+        <a href="{% url 'moviecollection:movie_detail' movie.id %}"><img class="movie-cover" src={{ movie.img_url }} alt={{ movie.title }}></a>
+      {% endfor %}
+    </article>
+    <br>
+  {% else %}
+    <p>No movies yet!</p>
+  {% endif %}
+
+  <br>
+
+  <div class='stat-grid'>
+    <a class="box" href='{% url 'moviecollection:genre_movies' genre.id %}'>
+      <h3>Movies</h3> <p>{{movie_count}}</p>
+    </a>
+    <a class="box" href='{% url 'moviecollection:genre_series' genre.id %}'>
+      <h3>Series</h3> <p>{{series_count}}</p>
+    </a>
+  </div>
+
+{% endblock %}

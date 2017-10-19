@@ -1,0 +1,40 @@
+{% extends 'moviecollection/base.html' %}
+
+{% block content %}
+  {% if all_series %}
+    {% csrf_token %}
+    <br>
+    <form method="POST" action="{% url 'moviecollection:series' %}">
+      {% csrf_token %}
+      {{search_form}}
+      <input type="submit" name="search" value="Search">
+    </form>
+    <ul>
+    {% for series in all_series %}
+    <article class="listing">
+      <h3><a href="{% url 'moviecollection:series_detail' series.id %}">{{ series.name }}</a></h3>
+      <p>{{ series.genre }}</p>
+      <p>({{series.movie_count}} movies)</p>
+    </article>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p>No series yet!</p>
+  {% endif %}
+
+  <div class="pagination">
+    <span class="step-links">
+        {% if all_series.has_previous %}
+            <a href="?page={{ all_series.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ all_series.number }} of {{ all_series.paginator.num_pages }}.
+        </span>
+
+        {% if all_series.has_next %}
+            <a href="?page={{ all_series.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+  </div>
+{% endblock %}

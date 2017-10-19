@@ -1,0 +1,20 @@
+{% extends 'moviecollection/base.html' %}
+
+{% block content %}
+  {% if all_genres %}
+    <ul>
+    {% for genre in all_genres %}
+    <article class="listing">
+      <h3><a href="{% url 'moviecollection:genre_detail' genre.pk %}">{{ genre.name }}</a></h3>
+      {% if genre.movie_count == 1 %}
+        <p>({{genre.movie_count}} movie)</p>
+      {% else %}
+        <p>({{genre.movie_count}} movies)</p>
+      {% endif %}
+    </article>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p>No genres yet!</p>
+  {% endif %}
+{% endblock %}
