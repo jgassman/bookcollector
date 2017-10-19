@@ -96,14 +96,13 @@ def genre_movies(request, genre_id):
     movies = Movie.objects.filter(genre=genre).order_by('title')
     paginator = Paginator(movies, 50)
     page = request.GET.get('page')
-    # search_form = SearchForm()
     try:
         all_movies = paginator.page(page)
     except PageNotAnInteger:
         all_movies = paginator.page(1)
     except EmptyPage:
         all_movies = paginator.page(paginator.num_pages)
-    return render(request, 'moviecollection/movies.html', {'all_movies': all_movies})  # , 'search_form': search_form})
+    return render(request, 'moviecollection/movies.html', {'all_movies': all_movies})
 
 
 @login_required
@@ -112,11 +111,10 @@ def genre_series(request, genre_id):
     series = [s for s in Series.objects.all() if s.genre == genre]
     paginator = Paginator(series, 50)
     page = request.GET.get('page')
-    # search_form = SearchForm()
     try:
         all_series = paginator.page(page)
     except PageNotAnInteger:
         all_series = paginator.page(1)
     except EmptyPage:
         all_series = paginator.page(paginator.num_pages)
-    return render(request, 'bookcollection/series.html', {'all_series': all_series})  # , 'search_form': search_form})
+    return render(request, 'moviecollection/series.html', {'all_series': all_series})
