@@ -4,11 +4,13 @@
   {% if all_series %}
     {% csrf_token %}
     <br>
-    <form method="POST" action="{% url 'moviecollection:series' %}">
-      {% csrf_token %}
-      {{search_form}}
-      <input type="submit" name="search" value="Search">
-    </form>
+    {% if search_form %}
+      <form method="POST" action="{% url 'moviecollection:series' %}">
+        {% csrf_token %}
+        {{search_form}}
+        <input type="submit" name="search" value="Search">
+      </form>
+    {% endif %}
     <ul>
     {% for series in all_series %}
     <article class="listing">
