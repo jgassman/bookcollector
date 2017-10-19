@@ -1,3 +1,4 @@
+import json
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import get_object_or_404, render
@@ -9,7 +10,8 @@ from .models import Series, Genre, Movie
 @login_required
 def index(request):
     context = {
-        'movie_count': Movie.objects.count()
+        'movie_count': Movie.objects.count(),
+        'genreData': json.dumps({g.name: Movie.objects.filter(genre=g).count() for g in Genre.objects.all()})
     }
     return render(request, 'moviecollection/index.html', context=context)
 
