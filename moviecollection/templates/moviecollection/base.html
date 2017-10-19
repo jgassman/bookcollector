@@ -10,7 +10,9 @@
       <h1> Movie Collector </h1>
     </a>
     <div class="links">
-      <a href="#"> Movies </a>
+      <a href="{% url 'moviecollection:movies' %}"> Movies </a>
+      <a href="{% url 'moviecollection:series' %}"> Series </a>
+      <a href="{% url 'moviecollection:genres' %}"> Genres </a>
       {%if user.is_authenticated %}
         <a href="{% url 'logout' %}"> Log out </a>
       {% endif %}

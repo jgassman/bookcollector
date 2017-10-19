@@ -21,7 +21,7 @@ ol li a {
 }
 
 p a {
-  color: #b77c3a;
+  color: #ffdb00;
 }
 
 .listing {
@@ -239,25 +239,25 @@ input[type=submit]{
   text-align: center;
 }
 
-.book-cover {
+.movie-cover {
   height: auto;
   width: 125px;
 }
 
-.book-content .cover-space {
+.movie-content .cover-space {
     height:200px;
     width:140px;
     float: left;
     margin-right: 15px;
 }
 
-.book-content {
+.movie-content {
     width: 600px;
     padding: 20px;
     overflow: hidden;
 }
 
-.book-content img {
+.movie-content img {
     margin-right: 15px;
     float: left;
 }

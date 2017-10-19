@@ -1,0 +1,57 @@
+{% extends 'moviecollection/base.html' %}
+
+{% block content %}
+  {% if all_movies %}
+    {% csrf_token %}
+    <br>
+      {% csrf_token %}
+      {{search_form}}
+      <input type="submit" name="search" value="Search">
+    </form>
+    <ul>
+    {% for movie in all_movies %}
+    <article class="listing">
+      <div class="cover-space">
+        <img class="movie-cover" src={{ movie.img_url }} alt={{ movie.title }}>
+      </div>
+      <h3><a href="{% url 'moviecollection:movie_detail' movie.id %}">{{ movie.title }}</a></h3>
+      <div class="detail year">
+        <span>Year:</span> {{movie.year}}
+      </div>
+      <div class="detail genre">
+        <span>Genre:</span> {{movie.genre}}
+      </div>
+      {% if movie.series %}
+        {% if movie.series_number %}
+          <div class="detail series">
+            <span>Series:</span> {{ movie.series }} (movie {{movie.series_number}})
+          </div>
+        {% else %}
+          <div class="detail series">
+            <span>Series:</span> {{ movie.series }}
+          </div>
+        {% endif %}
+      {% endif %}
+    </article>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p>No movies yet!</p>
+  {% endif %}
+
+  <div class="pagination">
+    <span class="step-links">
+        {% if all_movies.has_previous %}
+            <a href="?page={{ all_movies.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ all_movies.number }} of {{ all_movies.paginator.num_pages }}.
+        </span>
+
+        {% if all_movies.has_next %}
+            <a href="?page={{ all_movies.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+  </div>
+{% endblock %}

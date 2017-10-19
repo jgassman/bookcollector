@@ -1,0 +1,24 @@
+{% extends 'moviecollection/base.html' %}
+
+{% block content %}
+
+  <div class='page-title'>
+    <h1>{{ movie }}</h1>
+  </div>
+
+  <div class="movie-content">
+    <div class="cover-space">
+      <img class="movie-cover" src={{ movie.img_url }} alt={{ movie}}>
+    </div>
+    <p><span>Year:</span> {{movie.year}}</p>
+    <p><span>Genre:</span> {{movie.genre}}</p>
+    {% if movie.series %}
+      <p><span>Series:</span> {{ movie.series }} (Movie {{movie.series_number}})</p>
+    {% endif %}
+  </div>
+
+  <p>See more movies of genre <a href="{% url 'moviecollection:genre_detail' movie.genre.id %}">{{ movie.genre }}</a></p>
+  {% if movie.series %}
+    <p>See more movies in the <a href="{% url 'moviecollection:series_detail' movie.series.id %}">{{ movie.series.name }}</a> series</p>
+  {% endif %}
+{% endblock %}
