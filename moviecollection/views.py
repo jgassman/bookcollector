@@ -4,7 +4,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import get_object_or_404, render
 
 from .forms import SearchForm
-from .models import Series, Genre, Movie
+from .models import Series, Genre, Movie, Tag
 
 
 @login_required
@@ -121,3 +121,16 @@ def genre_series(request, genre_id):
     except EmptyPage:
         all_series = paginator.page(paginator.num_pages)
     return render(request, 'moviecollection/series.html', {'all_series': all_series})
+
+
+@login_required
+def tags(request):
+    tags = Tag.objects.all()
+    return render(request, 'moviecollection/tags.html', {'tags': tags})
+
+
+@login_required
+def tag_detail(request, tag_id):
+    tag = get_object_or_404(Tag, pk=tag_id)
+    tag_movies = sorted(tag.movie_set.all(), key=lambda b: b.alphabetical_title)
+    return render(request, 'moviecollection/tag_detail.html', {'tag': tag, 'tag_movies': tag_movies})

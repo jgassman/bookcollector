@@ -22,4 +22,11 @@
   {% if movie.series %}
     <p>See more movies in the <a href="{% url 'moviecollection:series_detail' movie.series.id %}">{{ movie.series.name }}</a> series</p>
   {% endif %}
+  {% if movie.tags.all %}
+    <p>Tags:
+      {% for tag in movie.tags.all %}
+        <a href="{% url 'moviecollection:tag_detail' tag.id %}">{{ tag }} </a>|
+      {% endfor %}
+    </p>
+  {% endif %}
 {% endblock %}

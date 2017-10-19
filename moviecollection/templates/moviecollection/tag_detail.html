@@ -1,0 +1,19 @@
+{% extends 'moviecollection/base.html' %}
+
+{% block content %}
+
+  <div class='page-title'>
+    <h1>{{ tag }}</h1>
+  </div>
+
+  {% if tag_movies %}
+    <article class="small-listing">
+      {% for movie in tag_movies %}
+        <a href="{% url 'moviecollection:movie_detail' movie.id %}"><img class="movie-cover" src={{ movie.img_url }} alt={{ movie.title }}></a>
+      {% endfor %}
+    </article>
+  {% else %}
+    <p>No movies yet!</p>
+  {% endif %}
+
+{% endblock %}
