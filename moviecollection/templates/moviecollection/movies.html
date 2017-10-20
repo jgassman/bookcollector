@@ -34,6 +34,9 @@
             <span>Series:</span> {{ movie.series }}
           </div>
         {% endif %}
+      <div class="detail format">
+        <span>Format:</span> {{movie.format_str}}
+      </div>
       {% endif %}
     </article>
     {% endfor %}
