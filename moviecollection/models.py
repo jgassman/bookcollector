@@ -2,6 +2,12 @@ from django.db import models
 
 from smart_selects.db_fields import ChainedForeignKey
 
+FORMAT_CHOICES = (
+    ('blu_ray', 'Blu-Ray'),
+    ('dvd', 'DVD'),
+    ('mixed', 'Blu-Ray/DVD'),
+)
+
 
 class Genre(models.Model):
     name = models.CharField(max_length=25)
@@ -75,6 +81,7 @@ class Movie(models.Model):
         auto_choose=True,
         sort=True,
         null=True, blank=True)
+    disc_format = models.CharField(max_length=10, choices=FORMAT_CHOICES, default='dvd')
     img_url = models.URLField(blank=True, null=True)
     tags = models.ManyToManyField(Tag, blank=True)
 
@@ -90,9 +97,11 @@ class Movie(models.Model):
         for flag in starts_with_flags:
             if title.lower().startswith(flag):
                 return ("%s, %s" % (title[len(flag):], title[:len(flag)-1])).lower()
-            else:
-                pass
         return self.title.lower()
+
+    @property
+    def format_str(self):
+        return [f[1] for f in FORMAT_CHOICES if f[0] == self.disc_format][0]
 
     class Meta:
         unique_together = ('title', 'year',)
