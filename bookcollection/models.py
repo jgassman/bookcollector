@@ -1,3 +1,5 @@
+import re
+
 from django.db import models
 
 from smart_selects.db_fields import ChainedForeignKey
@@ -19,10 +21,7 @@ class Genre(models.Model):
 
     @property
     def sorted_books(self):
-        books = []
-        for book in sorted(self.book_set.all(), key=lambda b: b.alphabetical_title):
-            books.append(book)
-        return books
+        return list(self.book_set.all().order_by('alphabetical_title'))
 
     def __str__(self):
         return self.name
@@ -31,19 +30,8 @@ class Genre(models.Model):
         ordering = ['name']
 
 
-class Subgenre(models.Model):
-    name = models.CharField(max_length=25)
+class Subgenre(Genre):
     genre = models.ForeignKey(Genre)
-
-    @property
-    def sorted_books(self):
-        books = []
-        for book in sorted(self.book_set.all(), key=lambda b: b.alphabetical_title):
-            books.append(book)
-        return books
-
-    def __str__(self):
-        return self.name
 
     class Meta:
         ordering = ['name', 'genre']
@@ -69,25 +57,15 @@ class Author(models.Model):
 
     @property
     def sorted_books(self):
-        books = []
-        for book in sorted(self.book_set.all(), key=lambda b: b.alphabetical_title):
-            books.append(book)
-        return books
+        return list(self.book_set.all().order_by('alphabetical_title'))
 
     @property
     def genres(self):
-        genre_set = set()
-        for book in self.book_set.all():
-            genre_set.add(book.genre)
-        return genre_set
+        return set((book.genre for book in self.book_set.all()))
 
     @property
     def series(self):
-        series_set = set()
-        for book in self.book_set.all():
-            if book.series:
-                series_set.add(book.series)
-        return series_set
+        return set((book.series for book in self.book_set.all() if book.series))
 
     @property
     def genre_count(self):
@@ -130,10 +108,7 @@ class Series(models.Model):
 
     @property
     def authors(self):
-        authors = set()
-        for book in Book.objects.filter(series=self):
-            [authors.add(a) for a in book.authors.all()]
-        return authors
+        return set((a for book in Book.objects.filter(series=self) for a in book.authors.all()))
 
     def __str__(self):
         return self.name
@@ -168,17 +143,14 @@ class Book(models.Model):
         return [a for a in AGE_GROUP_CHOICES if a[0] == self.age_group][0][1]
 
     @property
-    def alphabetical_title(self):
-        title = self.title
-
-        starts_with_flags = ['the ', 'an ', 'a ']
-
-        for flag in starts_with_flags:
-            if title.lower().startswith(flag):
-                return ("%s, %s" % (title[len(flag):], title[:len(flag)-1])).lower()
-            else:
-                pass
-        return self.title.lower()
+    def alphabetical_title(title):
+        title = title.lower()
+        prefixes = ('the ', 'an ', 'a ')
+        matcher = re.compile('|'.join(map(re.escape, prefixes))).match
+        prefix = matcher(title)
+        if prefix is not None:
+            return "{}, {}".format(title[len(prefix.group()):], prefix.group().strip())
+        return title
 
     def __str__(self):
         return self.title
