@@ -1,5 +1,3 @@
-import re
-
 from django.db import models
 
 from smart_selects.db_fields import ChainedForeignKey
@@ -72,11 +70,18 @@ class Author(models.Model):
 
     @property
     def genres(self):
-        return set((book.genre for book in self.book_set.all()))
+        genre_set = set()
+        for book in self.book_set.all():
+            genre_set.add(book.genre)
+        return genre_set
 
     @property
     def series(self):
-        return set((book.series for book in self.book_set.all() if book.series))
+        series_set = set()
+        for book in self.book_set.all():
+            if book.series:
+                series_set.add(book.series)
+        return series_set
 
     @property
     def genre_count(self):
@@ -119,7 +124,10 @@ class Series(models.Model):
 
     @property
     def authors(self):
-        return set((a for book in Book.objects.filter(series=self) for a in book.authors.all()))
+        authors = set()
+        for book in Book.objects.filter(series=self):
+            [authors.add(a) for a in book.authors.all()]
+        return authors
 
     def __str__(self):
         return self.name
