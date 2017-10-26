@@ -21,7 +21,7 @@ class Genre(models.Model):
 
     @property
     def sorted_books(self):
-        return list(self.book_set.all().order_by('alphabetical_title'))
+        return sorted(list(self.book_set.all()), key=lambda b: b.alphabetical_title)
 
     def __str__(self):
         return self.name
@@ -30,8 +30,19 @@ class Genre(models.Model):
         ordering = ['name']
 
 
-class Subgenre(Genre):
+class Subgenre(models.Model):
+    name = models.CharField(max_length=25)
     genre = models.ForeignKey(Genre)
+
+    @property
+    def sorted_books(self):
+        books = []
+        for book in sorted(self.book_set.all(), key=lambda b: b.alphabetical_title):
+            books.append(book)
+        return books
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         ordering = ['name', 'genre']
@@ -57,7 +68,7 @@ class Author(models.Model):
 
     @property
     def sorted_books(self):
-        return list(self.book_set.all().order_by('alphabetical_title'))
+        return sorted(list(self.book_set.all()), key=lambda b: b.alphabetical_title)
 
     @property
     def genres(self):
@@ -143,8 +154,8 @@ class Book(models.Model):
         return [a for a in AGE_GROUP_CHOICES if a[0] == self.age_group][0][1]
 
     @property
-    def alphabetical_title(title):
-        title = title.lower()
+    def alphabetical_title(self):
+        title = self.title.lower()
         prefixes = ('the ', 'an ', 'a ')
         matcher = re.compile('|'.join(map(re.escape, prefixes))).match
         prefix = matcher(title)
