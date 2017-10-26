@@ -19,10 +19,7 @@ class Genre(models.Model):
 
     @property
     def sorted_books(self):
-        books = []
-        for book in sorted(self.book_set.all(), key=lambda b: b.alphabetical_title):
-            books.append(book)
-        return books
+        return sorted(list(self.book_set.all()), key=lambda b: b.alphabetical_title)
 
     def __str__(self):
         return self.name
@@ -69,10 +66,7 @@ class Author(models.Model):
 
     @property
     def sorted_books(self):
-        books = []
-        for book in sorted(self.book_set.all(), key=lambda b: b.alphabetical_title):
-            books.append(book)
-        return books
+        return sorted(list(self.book_set.all()), key=lambda b: b.alphabetical_title)
 
     @property
     def genres(self):
@@ -169,16 +163,13 @@ class Book(models.Model):
 
     @property
     def alphabetical_title(self):
-        title = self.title
-
-        starts_with_flags = ['the ', 'an ', 'a ']
-
-        for flag in starts_with_flags:
-            if title.lower().startswith(flag):
-                return ("%s, %s" % (title[len(flag):], title[:len(flag)-1])).lower()
-            else:
-                pass
-        return self.title.lower()
+        title = self.title.lower()
+        prefixes = ('the ', 'an ', 'a ')
+        matcher = re.compile('|'.join(map(re.escape, prefixes))).match
+        prefix = matcher(title)
+        if prefix is not None:
+            return "{}, {}".format(title[len(prefix.group()):], prefix.group().strip())
+        return title
 
     def __str__(self):
         return self.title
