@@ -28,5 +28,15 @@
         drawPieChart(data,  "formatCanvas", "formatLegend");
       </script>
     </div>
+    <div class="box">
+      <h3>Movies by Production Company</h3>
+      <canvas id="companyCanvas"></canvas>
+      <div id="companyLegend"></div>
+      <script type="text/javascript" src="/static/moviecollection/piechart.js"></script>
+      <script>
+        var data = {{ companyData|safe }};
+        drawPieChart(data,  "companyCanvas", "companyLegend");
+      </script>
+    </div>
   </div>
 {% endblock %}
