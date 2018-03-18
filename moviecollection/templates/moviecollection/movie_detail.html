@@ -17,6 +17,7 @@
       <p><span>Series:</span> {{ movie.series }} (Movie {{movie.series_number}})</p>
     {% endif %}
     <p><span>Format:</span> {{movie.format_str}}</p>
+    {% if movie.tv_series %}<span>[TV Show]</span>{% endif %}
   </div>
 
   <p>See more movies of genre <a href="{% url 'moviecollection:genre_detail' movie.genre.id %}">{{ movie.genre }}</a></p>

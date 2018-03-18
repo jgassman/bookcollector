@@ -9,6 +9,20 @@ FORMAT_CHOICES = (
 )
 
 
+class Company(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+    @property
+    def movie_count(self):
+        return len(self.movie_set.all())
+
+    class Meta:
+        ordering = ['name']
+
+
 class Genre(models.Model):
     name = models.CharField(max_length=25)
 
@@ -70,6 +84,7 @@ class Tag(models.Model):
 class Movie(models.Model):
     title = models.CharField(max_length=100)
     year = models.IntegerField()
+    company = models.ForeignKey(Company)
     series = models.ForeignKey(Series, null=True, blank=True)
     series_number = models.IntegerField(null=True, blank=True)
     genre = models.ForeignKey(Genre)
@@ -82,6 +97,7 @@ class Movie(models.Model):
         sort=True,
         null=True, blank=True)
     disc_format = models.CharField(max_length=10, choices=FORMAT_CHOICES, default='dvd')
+    tv_series = models.BooleanField()
     img_url = models.URLField(blank=True, null=True)
     tags = models.ManyToManyField(Tag, blank=True)
 

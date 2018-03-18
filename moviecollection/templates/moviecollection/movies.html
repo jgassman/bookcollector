@@ -37,6 +37,9 @@
       <div class="detail format">
         <span>Format:</span> {{movie.format_str}}
       </div>
+      <div class="detail tv_series">
+        {% if movie.tv_series %}<span>[TV Show]</span>{% endif %}
+      </div>
       {% endif %}
     </article>
     {% endfor %}

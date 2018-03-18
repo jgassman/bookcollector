@@ -4,15 +4,16 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import get_object_or_404, render
 
 from .forms import SearchForm
-from .models import Series, Genre, Movie, Tag, FORMAT_CHOICES
+from .models import Series, Company, Genre, Movie, Tag, FORMAT_CHOICES
 
 
 @login_required
 def index(request):
     context = {
         'movie_count': Movie.objects.count(),
-        'genreData': json.dumps({g.name: Movie.objects.filter(genre=g).count() for g in Genre.objects.all()}),
-        'formatData': json.dumps({f[1]: Movie.objects.filter(disc_format=f[0]).count() for f in FORMAT_CHOICES})
+        'genreData': json.dumps({g.name: g.movie_count for g in Genre.objects.all()}),
+        'formatData': json.dumps({f[1]: Movie.objects.filter(disc_format=f[0]).count() for f in FORMAT_CHOICES}),
+        'companyData': json.dumps({c.name: c.movie_count for c in Company.objects.all()})
     }
     return render(request, 'moviecollection/index.html', context=context)
 
