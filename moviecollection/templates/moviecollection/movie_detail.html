@@ -11,6 +11,7 @@
       <img class="movie-cover" src={{ movie.img_url }} alt={{ movie}}>
     </div>
     <p><span>Year:</span> {{movie.year}}</p>
+    <p><span>Produced By:</span> {{movies.companies.all|join:", " }}</p>
     <p><span>Genre:</span> {{movie.genre}}</p>
     <p><span>Subgenre:</span> {{movie.subgenre}}</p>
     {% if movie.series %}

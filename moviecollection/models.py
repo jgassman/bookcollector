@@ -21,6 +21,7 @@ class Company(models.Model):
 
     class Meta:
         ordering = ['name']
+        verbose_name_plural = 'companies'
 
 
 class Genre(models.Model):
@@ -84,7 +85,7 @@ class Tag(models.Model):
 class Movie(models.Model):
     title = models.CharField(max_length=100)
     year = models.IntegerField()
-    company = models.ForeignKey(Company, null=True, blank=True)
+    company = models.ManyToManyField(Company, null=True, blank=True)
     series = models.ForeignKey(Series, null=True, blank=True)
     series_number = models.IntegerField(null=True, blank=True)
     genre = models.ForeignKey(Genre)

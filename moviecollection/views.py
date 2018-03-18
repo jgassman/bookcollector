@@ -11,6 +11,7 @@ from .models import Series, Company, Genre, Movie, Tag, FORMAT_CHOICES
 def index(request):
     context = {
         'movie_count': Movie.objects.count(),
+        'company_count': Company.objects.count(),
         'genreData': json.dumps({g.name: g.movie_count for g in Genre.objects.all()}),
         'formatData': json.dumps({f[1]: Movie.objects.filter(disc_format=f[0]).count() for f in FORMAT_CHOICES}),
         'companyData': json.dumps({c.name: c.movie_count for c in Company.objects.all()})
