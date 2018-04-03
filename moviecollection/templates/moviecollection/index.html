@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block content %}
-  {{message}}
   <div class='stat-grid'>
     <a href='movies' class="box" style="display:box">
       <h3>Movies</h3>
@@ -33,4 +32,13 @@
       </script>
     </div>
   </div>
+  {% if movies %}
+    <article class="small-listing">
+      {% for movie in movies %}
+        <a href="{% url 'moviecollection:movie_detail' movie.id %}"><img class="movie-cover" src={{ movie.img_url }} alt={{ movie.title }}></a>
+      {% endfor %}
+    </article>
+  {% else %}
+    <p>No movies yet!</p>
+  {% endif %}
 {% endblock %}

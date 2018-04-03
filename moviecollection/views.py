@@ -10,6 +10,7 @@ from .models import Series, Company, Genre, Movie, Tag, FORMAT_CHOICES
 @login_required
 def index(request):
     context = {
+        'movies': sorted(Movie.objects.all(), key=lambda b: b.alphabetical_title),
         'movie_count': Movie.objects.count(),
         'company_count': Company.objects.count(),
         'genreData': json.dumps({g.name: g.movie_count for g in Genre.objects.all()}),
