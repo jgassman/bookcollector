@@ -6,6 +6,7 @@ app_name = 'moviecollection'
 urlpatterns = [
     url(r'^$', views.index, name='view_collection'),
     url(r'^movies/$', views.movies, name='movies'),
+    url(r'^movie_covers/$', views.movie_covers, name='movie_covers'),
     url(r'^movies/(?P<movie_id>[0-9]+)/$', views.movie_detail, name='movie_detail'),
     url(r'^movies/genre/(?P<genre_id>[0-9]+)/$', views.genre_movies, name='genre_movies'),
     url(r'^genres/$', views.genres, name='genres'),

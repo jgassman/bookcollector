@@ -21,6 +21,14 @@ def index(request):
 
 
 @login_required
+def movie_covers(request):
+    context = {
+        'movies': sorted(Movie.objects.all(), key=lambda b: b.alphabetical_title)
+    }
+    return render(request, 'moviecollection/movie_covers.html', context=context)
+
+
+@login_required
 def movies(request):
     movies = Movie.objects.all()
     if request.method == 'POST':
