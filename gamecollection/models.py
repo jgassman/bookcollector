@@ -64,54 +64,6 @@ class Franchise(models.Model):
         ordering = ['name']
 
 
-class Developer(models.Model):
-    name = models.CharField(max_length=100)
-
-    @property
-    def games(self):
-        return self.game_set.all()
-
-    @property
-    def game_count(self):
-        return self.game_set.count()
-
-    @property
-    def franchises(self):
-        franchise_set = set()
-        for game in self.games:
-            for franchise in game.franchises.all():
-                franchise_set.add(franchise)
-        return franchise_set
-
-    @property
-    def franchise_count(self):
-        return len(self.franchises)
-
-    @property
-    def genres(self):
-        genre_set = set()
-        for game in self.game_set.all():
-            genre_set.add(game.genre)
-        return genre_set
-
-    @property
-    def genre_count(self):
-        return len(self.genres)
-
-    @property
-    def systems(self):
-        system_set = set()
-        for game in self.game_set.all():
-            system_set.add(game.system)
-        return system_set
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        ordering = ['name']
-
-
 class System(models.Model):
     name = models.CharField(max_length=100)
 
@@ -142,18 +94,6 @@ class System(models.Model):
             genre_set.add(game.genre)
         return genre_set
 
-    @property
-    def developers(self):
-        developer_set = set()
-        for game in self.games:
-            for dev in game.developers.all():
-                developer_set.add(dev)
-        return developer_set
-
-    @property
-    def developer_count(self):
-        return len(self.developers)
-
     def __str__(self):
         return self.name
 
@@ -166,7 +106,6 @@ class Game(models.Model):
     year_released = models.IntegerField()
     age_rating = models.IntegerField()
     age_rating = models.CharField(max_length=15, choices=AGE_RATING_CHOICES, default='E')
-    developers = models.ManyToManyField(Developer)
     franchises = models.ManyToManyField(Franchise, blank=True)
     system = models.ForeignKey(System)
     genre = models.ForeignKey(Genre)

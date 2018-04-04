@@ -6,14 +6,13 @@ from django.db.models import Sum
 from django.shortcuts import get_object_or_404, render
 
 from gamecollection.forms import SearchForm
-from gamecollection.models import Game, Genre, Franchise, Developer, System, AGE_RATING_CHOICES
+from gamecollection.models import Game, Genre, Franchise, System, AGE_RATING_CHOICES
 
 
 @login_required
 def index(request):
     context = {
         'game_count': Game.objects.count(),
-        'developer_count': Developer.objects.count(),
         'system_count': System.objects.count(),
         'all_game_count': Game.objects.aggregate(Sum('copies')),
         'systemData': json.dumps({s.name: Game.objects.filter(system=s).count() for s in System.objects.all()}),
@@ -70,27 +69,6 @@ def franchises(request):
 
 
 @login_required
-def developers(request):
-    if request.method == 'POST':
-        form = SearchForm(request.POST)
-        if form.is_valid():
-            search_text = form.cleaned_data['search_text']
-            developers = Developer.objects.filter(name__icontains=search_text)
-    else:
-        developers = Developer.objects.order_by('name')
-    paginator = Paginator(developers, 25)
-    page = request.GET.get('page')
-    search_form = SearchForm()
-    try:
-        all_developers = paginator.page(page)
-    except PageNotAnInteger:
-        all_developers = paginator.page(1)
-    except EmptyPage:
-        all_developers = paginator.page(paginator.num_pages)
-    return render(request, 'gamecollection/developers.html', {'all_developers': all_developers, 'search_form': search_form})
-
-
-@login_required
 def systems(request):
     if request.method == 'POST':
         form = SearchForm(request.POST)
@@ -141,15 +119,6 @@ def franchise_detail(request, franchise_id):
                'systemData': json.dumps({s.name: Game.objects.filter(system=s, franchises=franchise).count() for s in franchise.systems}),
                'genreData': json.dumps({g.name: Game.objects.filter(genre=g, franchises=franchise).count() for g in franchise.genres})}
     return render(request, 'gamecollection/franchise_detail.html', context=context)
-
-
-@login_required
-def developer_detail(request, developer_id):
-    developer = get_object_or_404(Developer, pk=developer_id)
-    context = {'developer': developer,
-               'systemData': json.dumps({s.name: Game.objects.filter(system=s, developers=developer).count() for s in developer.systems}),
-               'genreData': json.dumps({g.name: Game.objects.filter(genre=g, developers=developer).count() for g in developer.genres})}
-    return render(request, 'gamecollection/developer_detail.html', context=context)
 
 
 @login_required

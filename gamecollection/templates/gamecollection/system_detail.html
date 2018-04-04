@@ -10,10 +10,6 @@
       <p>{{system.game_count}}</p>
     </div>
     <div class="box">
-      <h3>Developers</h3>
-      <p>{{system.developer_count}}</p>
-    </div>
-    <div class="box">
       <h3>Franchises</h3>
       <p>{{system.franchise_count}}</p>
     </div>
@@ -47,16 +43,6 @@
               <li><a href="{% url 'gamecollection:game_detail' game.id %}">{{ game.title }}</a></li>
             {% endfor %}
           </ul>
-        </td>
-        <td>
-          {% if system.developers %}
-            <h3>Developers</h3>
-            <ul>
-              {% for developer in system.developers %}
-                <li><a href="{% url 'gamecollection:developer_detail' developer.id %}">{{ developer.name }}</a></li>
-              {% endfor %}
-            </ul>
-          {% endif %}
         </td>
         <td>
           {% if system.franchises %}
