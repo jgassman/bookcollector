@@ -9,21 +9,6 @@ FORMAT_CHOICES = (
 )
 
 
-class Company(models.Model):
-    name = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.name
-
-    @property
-    def movie_count(self):
-        return len(self.movie_set.all())
-
-    class Meta:
-        ordering = ['name']
-        verbose_name_plural = 'companies'
-
-
 class Genre(models.Model):
     name = models.CharField(max_length=25)
 
@@ -85,7 +70,6 @@ class Tag(models.Model):
 class Movie(models.Model):
     title = models.CharField(max_length=100)
     year = models.IntegerField()
-    company = models.ManyToManyField(Company, null=True, blank=True)
     series = models.ForeignKey(Series, null=True, blank=True)
     series_number = models.IntegerField(null=True, blank=True)
     genre = models.ForeignKey(Genre)
