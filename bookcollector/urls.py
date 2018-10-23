@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
+    url(r'^api/', include('api.urls', namespace='api')),
     url(r'^bookcollection/', include('bookcollection.urls', namespace='bookcollection')),
     url(r'^gamecollection/', include('gamecollection.urls', namespace='gamecollection')),
     url(r'^moviecollection/', include('moviecollection.urls', namespace='moviecollection')),
