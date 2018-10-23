@@ -98,7 +98,6 @@ class AuthorTests(TestCase):
                 'last_name': 'Bronte'
             }
         }
-        print('/api/authors/{}'.format(bronte.pk))
         response = self.client.get('/api/authors/{}'.format(bronte.pk))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(json.loads(response.content)['data'], expected)
