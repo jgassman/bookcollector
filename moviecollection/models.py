@@ -17,7 +17,7 @@ class Genre(models.Model):
 
     @property
     def movie_count(self):
-        return len(self.movie_set.all())
+        return self.movie_set.count()
 
     class Meta:
         ordering = ['name']
@@ -32,7 +32,7 @@ class Subgenre(models.Model):
 
     @property
     def movie_count(self):
-        return len(self.movie_set.all())
+        return self.movie_set.count()
 
     class Meta:
         ordering = ['name']
@@ -50,7 +50,7 @@ class Series(models.Model):
 
     @property
     def movie_count(self):
-        return len(self.movie_set.all())
+        return self.movie_set.count()
 
     class Meta:
         verbose_name_plural = 'series'
