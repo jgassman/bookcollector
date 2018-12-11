@@ -138,6 +138,12 @@ class Series(models.Model):
         ordering = ['name']
 
 
+class BookManager(models.Manager):
+
+    def get_queryset(self):
+        return super(BookManager, self).get_queryset().exclude(storage=True)
+
+
 class Book(models.Model):
     title = models.CharField(max_length=100)
     year_published = models.IntegerField()
@@ -155,8 +161,11 @@ class Book(models.Model):
     age_group = models.CharField(max_length=15, choices=AGE_GROUP_CHOICES, default='Children')
     audiobook = models.BooleanField()
     read = models.BooleanField()
+    storage = models.BooleanField()
     img_url = models.URLField(blank=True, null=True)
     tags = models.ManyToManyField(Tag, blank=True)
+
+    objects = BookManager()
 
     @property
     def age(self):
