@@ -30,7 +30,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_json_api',
     'bookcollection',
-    'gamecollection',
     'moviecollection',
     'landingpage',
     'api',
