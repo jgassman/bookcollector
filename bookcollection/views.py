@@ -12,16 +12,24 @@ from .models import Author, Book, Series, Genre, Subgenre, AGE_GROUP_CHOICES, Ta
 
 @login_required
 def index(request):
+    read_books = Book.objects.filter(read=True, storage=False).count()
+    unread_books = Book.objects.filter(read=False, storage=False).count()
+    stored_books = Book.objects.filter(storage=True).count()
+    unstored_books = Book.objects.filter(storage=False).count()
     context = {
-        'book_count': Book.objects.count(),
-        'author_count': Author.objects.count(),
-        'series_count': Series.objects.count(),
-        'genreData': json.dumps({g.name: Book.objects.filter(genre=g).count() for g in Genre.objects.all()}),
-        'ageData': json.dumps({age[1]: Book.objects.filter(age_group=age[0]).count() for age in AGE_GROUP_CHOICES}),
+        'book_count': Book.objects.filter(storage=False).count(),
+        'author_count': Author.objects.filter(storage=False).count(),
+        'series_count': Series.objects.filter(storage=False).count(),
+        'genreData': json.dumps({g.name: Book.objects.filter(genre=g, storage=False).count() for g in Genre.objects.all()}),
+        'ageData': json.dumps({age[1]: Book.objects.filter(age_group=age[0], storage=False).count() for age in AGE_GROUP_CHOICES}),
         'readData': json.dumps({
-            'Read': Book.objects.filter(read=True).count(),
-            'Unread': Book.objects.filter(read=False).count()
-            })
+            'Read ({} books)'.format(read_books): read_books,
+            'Unread ({} books)'.format(unread_books): unread_books,
+        }),
+        'storageData': json.dumps({
+            'Stored ({} books)'.format(stored_books): stored_books,
+            'Unstored ({} books)'.format(unstored_books): unstored_books,
+        }),
     }
     return render(request, 'bookcollection/index.html', context=context)
 

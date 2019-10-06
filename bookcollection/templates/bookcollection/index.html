@@ -45,5 +45,15 @@
         drawPieChart(data,  "readCanvas", "readLegend");
       </script>
     </div>
+    <div class="box">
+      <h3>Books in Storage</h3>
+      <canvas id="storageCanvas"></canvas>
+      <div id="storageLegend"></div>
+      <script type="text/javascript" src="/static/bookcollection/piechart.js"></script>
+      <script>
+        var data = {{ storageData|safe }};
+        drawPieChart(data,  "storageCanvas", "storageLegend");
+      </script>
+    </div>
   </div>
 {% endblock %}

@@ -11,17 +11,9 @@ AGE_GROUP_CHOICES = (
 )
 
 
-class GenreManager(models.Manager):
-
-    def get_queryset(self):
-        return super(GenreManager, self).get_queryset().exclude(storage=True)
-
-
 class Genre(models.Model):
     name = models.CharField(max_length=25)
     storage = models.BooleanField()
-
-    objects = GenreManager()
 
     @property
     def book_count(self):
@@ -38,18 +30,10 @@ class Genre(models.Model):
         ordering = ['name']
 
 
-class SubgenreManager(models.Manager):
-
-    def get_queryset(self):
-        return super(SubgenreManager, self).get_queryset().exclude(storage=True)
-
-
 class Subgenre(models.Model):
     name = models.CharField(max_length=25)
     genre = models.ForeignKey(Genre)
     storage = models.BooleanField()
-
-    objects = SubgenreManager()
 
     @property
     def sorted_books(self):
@@ -75,18 +59,10 @@ class Tag(models.Model):
         ordering = ['name']
 
 
-class AuthorManager(models.Manager):
-
-    def get_queryset(self):
-        return super(AuthorManager, self).get_queryset().exclude(storage=True)
-
-
 class Author(models.Model):
     first_name = models.CharField(max_length=50, null=True, blank=True)
     last_name = models.CharField(max_length=50)
     storage = models.BooleanField()
-
-    objects = AuthorManager()
 
     @property
     def book_count(self):
@@ -129,17 +105,9 @@ class Author(models.Model):
         ordering = ['last_name', 'first_name']
 
 
-class SeriesManager(models.Manager):
-
-    def get_queryset(self):
-        return super(SeriesManager, self).get_queryset().exclude(storage=True)
-
-
 class Series(models.Model):
     name = models.CharField(max_length=50)
     storage = models.BooleanField()
-
-    objects = SeriesManager()
 
     @property
     def book_count(self):
@@ -174,12 +142,6 @@ class Series(models.Model):
         ordering = ['name']
 
 
-class BookManager(models.Manager):
-
-    def get_queryset(self):
-        return super(BookManager, self).get_queryset().exclude(storage=True)
-
-
 class Book(models.Model):
     title = models.CharField(max_length=100)
     year_published = models.IntegerField()
@@ -200,8 +162,6 @@ class Book(models.Model):
     storage = models.BooleanField()
     img_url = models.URLField(blank=True, null=True)
     tags = models.ManyToManyField(Tag, blank=True)
-
-    objects = BookManager()
 
     @property
     def age(self):

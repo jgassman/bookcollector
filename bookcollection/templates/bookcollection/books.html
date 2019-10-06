@@ -51,10 +51,13 @@
         {% endif %}
       {% endif %}
       {% if book.audiobook %}
-        <p><span>[audiobook]</span></p>
+        <div class="detail audiobook"><span>[audiobook]</span></div>
       {% endif %}
       {% if book.read is False %}
-        <p><span>[unread]</span></p>
+        <div class="detail unread"><span>[unread]</span></div>
+      {% endif %}
+      {% if book.storage %}
+        <div class="detail storage"><span>[storage]</span></div>
       {% endif %}
     </article>
     {% endfor %}
