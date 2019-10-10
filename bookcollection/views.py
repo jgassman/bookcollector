@@ -113,7 +113,7 @@ def books(request, age_code=None, *args, **kwargs):
 
 @login_required
 def unread(request, age_code=None, *args, **kwargs):
-    books = Book.objects.filter(read=False)
+    books = Book.objects.filter(read=False, storage=False)
     if age_code:
         books = books.filter(age_group=age_code)
     if request.method == 'POST':
