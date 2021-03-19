@@ -4,7 +4,7 @@ Django>=1.11.15,<2
 django-filter==1.0.4
 django-simple-select==0.3
 django-smart-selects==1.5.2
-djangorestframework==3.9.1
+djangorestframework==3.11.2
 djangorestframework-jsonapi==2.6.0
 gunicorn==19.7.1
 inflection==0.3.1
